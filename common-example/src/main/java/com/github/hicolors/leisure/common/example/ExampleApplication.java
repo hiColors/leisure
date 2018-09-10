@@ -1,5 +1,6 @@
 package com.github.hicolors.leisure.common.example;
 
+import com.github.hicolors.leisure.common.exception.ExtensionException;
 import com.github.hicolors.leisure.common.utils.JSONUtils;
 import lombok.Data;
 import org.springframework.boot.SpringApplication;
@@ -24,7 +25,7 @@ public class ExampleApplication {
 
     @GetMapping("/test")
     public String test() {
-        return System.getenv("env");
+        throw new ExtensionException(400,40L,"错误",null,null);
     }
 }
 

@@ -22,6 +22,7 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +65,7 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
         String url = request.getRequestURL().toString();
 
         if (exception instanceof ExtensionException) {
+            log.warn(MessageFormat.format("当前程序进入到异常捕获器，出错的 url 为：[ {0} ]，出错的参数为：[ {1} ]", url, JSONUtils.serialize(paramMap)), exception);
             ExtensionException expectException = (ExtensionException) exception;
             errorResponse.setStatus(expectException.getStatus());
             errorResponse.setCode(expectException.getCode());
@@ -72,13 +74,13 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
             response.setStatus(errorResponse.getStatus());
 
         } else {
+            log.error(MessageFormat.format("当前程序进入到异常捕获器，出错的 url 为：[ {0} ]，出错的参数为：[ {1} ]", url, JSONUtils.serialize(paramMap)), exception);
             if (exception instanceof BindException) {
                 errorResponse.setCode(PARAM_VALIDATED_UNPASS);
                 errorResponse.setMessage("输入的数据不合法,详情见 errors 字段");
                 for (FieldError fieldError : ((BindException) exception).getBindingResult().getFieldErrors()) {
                     errorResponse.addError(fieldError.getField(), fieldError.getDefaultMessage());
                 }
-
                 errorResponse.setStatus(HttpStatus.SERVICE_UNAVAILABLE.value());
                 response.setStatus(errorResponse.getStatus());
             } else {
