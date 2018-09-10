@@ -1,5 +1,6 @@
 package com.github.hicolors.leisure.common.framework.springmvc.response;
 
+import com.github.hicolors.leisure.common.exception.HttpStatus;
 import lombok.Data;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,6 +51,12 @@ public class ErrorResponse {
      * 当验证错误时，各项具体的错误信息
      */
     private List<Error> errors;
+
+    public ErrorResponse setStatus(Integer status) {
+        this.status = status;
+        this.error = HttpStatus.valueOf(this.status).getReasonPhrase();
+        return this;
+    }
 
     public ErrorResponse(HttpServletRequest request) {
         this.timestamp = new Timestamp(System.currentTimeMillis());
