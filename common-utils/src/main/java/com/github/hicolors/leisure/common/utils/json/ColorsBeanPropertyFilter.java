@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.github.hicolors.leisure.common.utils.JSONUtils;
+import com.github.hicolors.leisure.common.utils.JsonUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -14,6 +14,12 @@ import org.apache.commons.collections.CollectionUtils;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * ColorsBeanPropertyFilter
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/11
+ */
 @JsonFilter("jsonFilter")
 public class ColorsBeanPropertyFilter extends SimpleBeanPropertyFilter {
 
@@ -22,6 +28,10 @@ public class ColorsBeanPropertyFilter extends SimpleBeanPropertyFilter {
     private Map<Class<?>, Set<String>> includeMap = Maps.newConcurrentMap();
 
     private Map<Class<?>, Set<String>> excludeMap = Maps.newConcurrentMap();
+
+    public static Builder newBuilder(Class clazz) {
+        return new Builder(clazz);
+    }
 
     /**
      * 包含字段
@@ -77,10 +87,6 @@ public class ColorsBeanPropertyFilter extends SimpleBeanPropertyFilter {
         }
     }
 
-    public static Builder newBuilder(Class clazz) {
-        return new Builder(clazz);
-    }
-
     public Builder mixin(Class<?> type) {
         return new Builder(this, type);
     }
@@ -97,7 +103,7 @@ public class ColorsBeanPropertyFilter extends SimpleBeanPropertyFilter {
 
         public Builder(ColorsBeanPropertyFilter colorsBeanPropertyFilter, Class clazz) {
             this.filter = colorsBeanPropertyFilter;
-            this.currentClazz = JSONUtils.minix(clazz);
+            this.currentClazz = JsonUtils.minix(clazz);
         }
 
         public ColorsBeanPropertyFilter build() {

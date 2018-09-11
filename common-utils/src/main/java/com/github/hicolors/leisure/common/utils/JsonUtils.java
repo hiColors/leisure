@@ -11,8 +11,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.github.hicolors.leisure.common.utils.json.ColorsBeanPropertyFilter;
 import com.github.hicolors.leisure.common.utils.json.DateDeserializer;
 import com.github.hicolors.leisure.common.utils.json.DateSerializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Date;
@@ -24,8 +22,7 @@ import java.util.Objects;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2018/9/8
  */
-public class JSONUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JSONUtils.class);
+public class JsonUtils {
 
     private static ObjectMapper objectMapper;
 
@@ -73,19 +70,12 @@ public class JSONUtils {
     }
 
     private static String serialize(Object object, FilterLoader filterLoader) {
-        if (Objects.isNull(object)) { return ""; }
+        if (Objects.isNull(object)) {
+            return "";
+        }
         try {
             return objectMapper.writer(new SimpleFilterProvider().setFailOnUnknownId(false).setDefaultFilter(filterLoader.setup(ColorsBeanPropertyFilter.newBuilder(object.getClass())).build())).writeValueAsString(object);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
-        }
-    }
-
-
-    public static JsonNode deserialize(String json) {
-        try {
-            return objectMapper.readTree(json);
-        } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e.getCause());
         }
     }
@@ -98,6 +88,7 @@ public class JSONUtils {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T[] deserialize(String json, T[] classed) {
         try {
             return (T[]) objectMapper.readValue(json, classed.getClass());
@@ -110,6 +101,15 @@ public class JSONUtils {
     public static <T> T deserialize(String json, TypeReference<T> typeReference) {
         try {
             return (T) objectMapper.readValue(json, typeReference);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static JsonNode deserialize(String json) {
+        try {
+            return objectMapper.readTree(json);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e.getCause());
         }

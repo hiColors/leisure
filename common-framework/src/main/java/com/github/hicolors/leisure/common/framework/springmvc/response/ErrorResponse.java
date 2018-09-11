@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * ErrorResponse
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/11
+ */
 @Data
 public class ErrorResponse {
 
@@ -52,15 +58,15 @@ public class ErrorResponse {
      */
     private List<Error> errors;
 
+    public ErrorResponse(HttpServletRequest request) {
+        this.timestamp = new Timestamp(System.currentTimeMillis());
+        this.path = request.getRequestURI();
+    }
+
     public ErrorResponse setStatus(Integer status) {
         this.status = status;
         this.error = HttpStatus.valueOf(this.status).getReasonPhrase();
         return this;
-    }
-
-    public ErrorResponse(HttpServletRequest request) {
-        this.timestamp = new Timestamp(System.currentTimeMillis());
-        this.path = request.getRequestURI();
     }
 
     public void addError(String name, String message) {

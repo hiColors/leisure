@@ -1,7 +1,7 @@
 package com.github.hicolors.leisure.common.framework.springmvc.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.hicolors.leisure.common.utils.JSONUtils;
+import com.github.hicolors.leisure.common.utils.JsonUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -11,6 +11,13 @@ import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.config.annotation.*;
 
+
+/**
+ * ColorsWebMvcConfigurer
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/11
+ */
 @EnableWebMvc
 @EnableAsync
 @EnableAspectJAutoProxy
@@ -81,7 +88,7 @@ public class ColorsWebMvcConfigurer implements WebMvcConfigurer {
 
     @Bean
     @Primary
-    public ObjectMapper objectMapper(){
-        return JSONUtils.getObjectMapper();
+    public ObjectMapper objectMapper() {
+        return JsonUtils.getObjectMapper();
     }
 }

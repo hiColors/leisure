@@ -13,37 +13,38 @@ import java.util.List;
 public class LoggerConst {
 
 
+    public static final String REQUEST_KEY_BODY_PARAM = "body-param";
+    public static final String REQUEST_KEY_FORM_PARAM = "form-param";
     static final String REQUEST_PREFIX = "> ";
     static final String KEY_VALUE_SEPERATOR = ": ";
     static final String RESPONSE_PREFIX = "< ";
-
-    static final String REQUEST_HEADER_PREFIX = "request-";
-    static final String RESPONSE_HEADER_PREFIX = "response-";
-
+    static final String REQUEST_IDENTITY = "request";
+    static final String RESPONSE_IDENTITY = "response";
     static final String REQUEST_KEY_TRACE_ID = "trace-id";
-
-    //request 记录的key
+    /**
+     * request 记录的key
+     */
     static final String REQUEST_KEY_REQUEST_TIME = "request-time";
     static final String REQUEST_KEY_EXTRA_PARAM = "extra-param";
-    public static final String REQUEST_KEY_BODY_PARAM = "body-param";
-    public static final String REQUEST_KEY_FORM_PARAM = "form-param";
     static final String REQUEST_KEY_URL = "url";
     static final String REQUEST_KEY_HTTP_METHOD = "http-method";
 
-    static final String REQUEST_KEY_HOST = REQUEST_HEADER_PREFIX + "host";
-    static final String REQUEST_KEY_CONTENT_TYPE = REQUEST_HEADER_PREFIX + "content-type";
-    static final String REQUEST_KEY_CONTENT_LENGTH = REQUEST_HEADER_PREFIX + "content-length";
-    static final String REQUEST_KEY_USER_AGENT = REQUEST_HEADER_PREFIX + "user-agent";
-    static final String REQUEST_KEY_ACCEPT = REQUEST_HEADER_PREFIX + "accept";
+    static final String REQUEST_KEY_HOST = "host";
+    static final String REQUEST_KEY_CONTENT_TYPE = "content-type";
+    static final String REQUEST_KEY_CONTENT_LENGTH = "content-length";
+    static final String REQUEST_KEY_USER_AGENT = "user-agent";
+    static final String REQUEST_KEY_ACCEPT = "accept";
 
-    //response 记录的key
+    /**
+     * response 记录的key
+     */
     static final String RESPONSE_KEY_HTTP_STATUS = "http-status";
     static final String RESPONSE_KEY_RESPONSE_TIME = "response-time";
     static final String RESPONSE_KEY_TAKE_TIME = "take-time";
     static final String RESPONSE_KEY_RESPONSE_DATA = "response-data";
 
-    static final String RESPONSE_KEY_CONTENT_TYPE = RESPONSE_HEADER_PREFIX + "content-type";
-    static final String RESPONSE_KEY_CONTENT_LENGTH = RESPONSE_HEADER_PREFIX + "content-length";
+    static final String RESPONSE_KEY_CONTENT_TYPE = "content-type";
+    static final String RESPONSE_KEY_CONTENT_LENGTH = "content-length";
 
 
     static final String VALUE_DEFAULT = "-";

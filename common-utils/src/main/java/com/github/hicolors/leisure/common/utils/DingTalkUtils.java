@@ -23,10 +23,7 @@ import java.util.Map;
 @Slf4j
 public class DingTalkUtils {
 
-    private static HttpClient httpclient = HttpClients.createDefault();
-
     private static final String ENV = System.getProperty("env");
-
     private static final String STANDARD_TEMPLATE =
             "<font face=\"微软雅黑\" color=#ff0000 size=4> {0} </font>  \r\n" +
                     "> ENV : {1}  \r\n" +
@@ -37,7 +34,7 @@ public class DingTalkUtils {
                     "> 额外信息 : {6}  \r\n" +
                     "> 时间 : {7}  \r\n" +
                     "> 异常信息 : {8}  \r\n";
-
+    private static HttpClient httpclient = HttpClients.createDefault();
 
     /**
      * @param webhook 钉钉机器人地址
@@ -67,7 +64,7 @@ public class DingTalkUtils {
                 warning.getBusiness(),
                 warning.getMethodName(),
                 warning.getMethodParams(),
-                JSONUtils.serialize(warning.getExtraInfo()),
+                JsonUtils.serialize(warning.getExtraInfo()),
                 DateFormatUtils.format(warning.getDate(), "yyyy-MM-dd HH:mm:ss.SSS"),
                 warning.getExceptionMsg());
         return getMarkdownMsg(message);
@@ -75,12 +72,12 @@ public class DingTalkUtils {
 
 
     private static String getMarkdownMsg(String text) {
-        Map<String, Object> result = new HashMap<String, Object>();
+        Map<String, Object> result = new HashMap<>(2);
         result.put("msgtype", "markdown");
-        Map<String, Object> markdown = new HashMap<String, Object>();
+        Map<String, Object> markdown = new HashMap<>(2);
         markdown.put("title", "钉钉机器人预警");
         markdown.put("text", text);
         result.put("markdown", markdown);
-        return JSONUtils.serialize(result);
+        return JsonUtils.serialize(result);
     }
 }

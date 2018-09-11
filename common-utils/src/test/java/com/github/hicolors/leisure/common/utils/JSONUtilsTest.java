@@ -10,17 +10,17 @@ public class JSONUtilsTest {
 
     @Test
     public void serialize() {
-        String ss = JSONUtils.serialize(Person.builder().id(1L).name("leisure").birthday(new Date()).build());
+        String ss = JsonUtils.serialize(Person.builder().id(1L).name("leisure").birthday(new Date()).build());
         System.out.println(ss);
-        ss = JSONUtils.serializeExcludes(Person.builder().id(1L).name("leisure").birthday(new Date()).build(), "id");
+        ss = JsonUtils.serializeExcludes(Person.builder().id(1L).name("leisure").birthday(new Date()).build(), "id");
         System.out.println(ss);
-        ss = JSONUtils.serializeExcludes(Person.builder().id(1L).name("leisure").birthday(new Date()).build(), "name");
+        ss = JsonUtils.serializeExcludes(Person.builder().id(1L).name("leisure").birthday(new Date()).build(), "name");
         System.out.println(ss);
-        ss = JSONUtils.serializeIncludes(Person.builder().id(1L).name("leisure").birthday(new Date()).build(), "id");
+        ss = JsonUtils.serializeIncludes(Person.builder().id(1L).name("leisure").birthday(new Date()).build(), "id");
         System.out.println(ss);
-        ss = JSONUtils.serializeIncludes(Person.builder().id(1L).name("leisure").birthday(new Date()).build(), "name");
+        ss = JsonUtils.serializeIncludes(Person.builder().id(1L).name("leisure").birthday(new Date()).build(), "name");
         System.out.println(ss);
-        ss = JSONUtils.serializeIncludes(Person.builder().id(1L).name("leisure").birthday(new Date()).build(), "birthday");
+        ss = JsonUtils.serializeIncludes(Person.builder().id(1L).name("leisure").birthday(new Date()).build(), "birthday");
         System.out.println(ss);
     }
 

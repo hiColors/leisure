@@ -3,6 +3,8 @@ logging:
 
 server:
   port: 9999
+  servlet:
+    context-path: /common-example
 
 spring:
   application:
@@ -10,4 +12,4 @@ spring:
 
 
 warning:
-  dingtalk: https://oapi.dingtalk.com/robot/send?access_token=0bae3cc00e4b1a4a950ce5dedc2bc456b54b9aaa0811d0c43b2a1dac57ef0cec
+#  dingtalk: https://oapi.dingtalk.com/robot/send?access_token=0bae3cc00e4b1a4a950ce5dedc2bc456b54b9aaa0811d0c43b2a1dac57ef0cec

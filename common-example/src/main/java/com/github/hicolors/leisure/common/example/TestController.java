@@ -1,20 +1,30 @@
 package com.github.hicolors.leisure.common.example;
 
-import com.github.hicolors.leisure.common.exception.BusinessException;
-import com.github.hicolors.leisure.common.utils.JSONUtils;
+import com.github.hicolors.leisure.common.utils.JsonUtils;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * TestController
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/11
+ */
 @RestController
 @RequestMapping("/test")
 public class TestController {
 
-    @PostMapping
-    public String test(@RequestBody Person person) {
-        return JSONUtils.serializeExcludes(person);
+    @PostMapping("/json")
+    public String json(@RequestBody Person person) {
+        return JsonUtils.serializeExcludes(person);
     }
 
     @GetMapping
-    public String test() {
-        throw new BusinessException(40L, "错误", null);
+    public Person test() {
+        return new Person(1L, "liweichao");
+    }
+
+    @GetMapping("/error")
+    public Person error() {
+        throw new RuntimeException("xxxxx");
     }
 }

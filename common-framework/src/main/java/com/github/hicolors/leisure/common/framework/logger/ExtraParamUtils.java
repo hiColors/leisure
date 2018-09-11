@@ -8,6 +8,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * request 日志 ExtraParam 操作工具类
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/11
  */
 public class ExtraParamUtils {
 
@@ -33,7 +36,7 @@ public class ExtraParamUtils {
      */
     public static void put(String key, String obj, boolean cover) {
         // 从 threadlocal 取值
-        Map<String, String> extraMap = ObjectUtils.defaultIfNull(ThreadLocalUtils.getAndRemove(REQUEST_KEY_EXTRA_PARAM), new ConcurrentHashMap<>());
+        Map<String, String> extraMap = ObjectUtils.defaultIfNull(ThreadLocalUtils.getAndRemove(REQUEST_KEY_EXTRA_PARAM), new ConcurrentHashMap<>(16));
         // 设置值
         if (!cover) {
             extraMap.putIfAbsent(key, obj);
@@ -51,6 +54,6 @@ public class ExtraParamUtils {
      * @return
      */
     public static Map<String, String> getAll() {
-        return ObjectUtils.defaultIfNull(ThreadLocalUtils.getAndRemove(REQUEST_KEY_EXTRA_PARAM), new ConcurrentHashMap<>());
+        return ObjectUtils.defaultIfNull(ThreadLocalUtils.getAndRemove(REQUEST_KEY_EXTRA_PARAM), new ConcurrentHashMap<>(16));
     }
 }

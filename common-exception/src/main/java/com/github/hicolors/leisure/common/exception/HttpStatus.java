@@ -3,6 +3,12 @@ package com.github.hicolors.leisure.common.exception;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * HttpStatus
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/11
+ */
 public enum HttpStatus {
 
     // 1xx Informational
@@ -441,6 +447,28 @@ public enum HttpStatus {
         this.reasonPhrase = reasonPhrase;
     }
 
+    /**
+     * Return the enum constant of this type with the specified numeric value.
+     *
+     * @param statusCode the numeric value of the enum to be returned
+     * @return the enum constant with the specified numeric value
+     * @throws IllegalArgumentException if this enum has no constant for the specified numeric value
+     */
+    public static HttpStatus valueOf(int statusCode) {
+        HttpStatus httpStatus = Cache.get(statusCode);
+        if (Objects.nonNull(httpStatus)) {
+            return httpStatus;
+        } else {
+            for (HttpStatus status : values()) {
+                if (status.value == statusCode) {
+                    Cache.put(statusCode, status);
+                    return status;
+                }
+            }
+            throw new IllegalArgumentException("No matching constant for [" + statusCode + "]");
+        }
+
+    }
 
     /**
      * Return the integer value of this status code.
@@ -483,7 +511,6 @@ public enum HttpStatus {
         return Series.REDIRECTION.equals(series());
     }
 
-
     /**
      * Whether this status code is in the HTTP series
      * {@link com.github.hicolors.leisure.common.exception.HttpStatus.Series#CLIENT_ERROR}.
@@ -521,52 +548,41 @@ public enum HttpStatus {
 
 
     /**
-     * Return the enum constant of this type with the specified numeric value.
-     *
-     * @param statusCode the numeric value of the enum to be returned
-     * @return the enum constant with the specified numeric value
-     * @throws IllegalArgumentException if this enum has no constant for the specified numeric value
-     */
-    public static HttpStatus valueOf(int statusCode) {
-        HttpStatus httpStatus = Cache.get(statusCode);
-        if (Objects.nonNull(httpStatus)) {
-            return httpStatus;
-        } else {
-            for (HttpStatus status : values()) {
-                if (status.value == statusCode) {
-                    Cache.put(statusCode, status);
-                    return status;
-                }
-            }
-            throw new IllegalArgumentException("No matching constant for [" + statusCode + "]");
-        }
-
-    }
-
-
-    /**
      * Enumeration of HTTP status series.
      * <p>Retrievable via {@link HttpStatus#series()}.
      */
+    /**
+     * HttpStatus
+     *
+     * @author weichao.li (liweichao0102@gmail.com)
+     * @date 2018/9/11
+     */
     public enum Series {
-
+        /**
+         *
+         */
         INFORMATIONAL(1),
+        /**
+         *
+         */
         SUCCESSFUL(2),
+        /**
+         *
+         */
         REDIRECTION(3),
+        /**
+         *
+         */
         CLIENT_ERROR(4),
+        /**
+         *
+         */
         SERVER_ERROR(5);
 
         private final int value;
 
         Series(int value) {
             this.value = value;
-        }
-
-        /**
-         * Return the integer value of this status series. Ranges from 1 to 5.
-         */
-        public int value() {
-            return this.value;
         }
 
         public static Series valueOf(int status) {
@@ -581,6 +597,13 @@ public enum HttpStatus {
 
         public static Series valueOf(HttpStatus status) {
             return valueOf(status.value);
+        }
+
+        /**
+         * Return the integer value of this status series. Ranges from 1 to 5.
+         */
+        public int value() {
+            return this.value;
         }
     }
 

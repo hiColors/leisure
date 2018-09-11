@@ -5,6 +5,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * swagger 公共配置
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/11
  */
 @ConfigurationProperties(prefix = "swagger")
 public class SwaggerProperties {

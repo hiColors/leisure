@@ -14,7 +14,12 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
-
+/**
+ * ReflectionUtils
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/11
+ */
 public final class ReflectionUtils {
 
     private static Logger LOGGER = LoggerFactory.getLogger(ReflectionUtils.class);

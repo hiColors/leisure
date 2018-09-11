@@ -7,6 +7,12 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * LoggerConfiguration
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/11
+ */
 @Configuration
 public class LoggerConfiguration {
 

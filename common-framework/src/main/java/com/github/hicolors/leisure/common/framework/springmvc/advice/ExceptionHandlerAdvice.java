@@ -5,7 +5,7 @@ import com.github.hicolors.leisure.common.exception.ExtensionException;
 import com.github.hicolors.leisure.common.framework.logger.LoggerConst;
 import com.github.hicolors.leisure.common.framework.springmvc.enhance.ErrorEvent;
 import com.github.hicolors.leisure.common.framework.springmvc.response.ErrorResponse;
-import com.github.hicolors.leisure.common.utils.JSONUtils;
+import com.github.hicolors.leisure.common.utils.JsonUtils;
 import com.github.hicolors.leisure.common.utils.Warning;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -41,20 +41,16 @@ import java.util.Map;
 @Slf4j
 public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
 
+    private static final long UNEXPECT_EXCEPTION_CODE = 88888888L;
+    private static final long PARAM_VALIDATED_UN_PASS = 66666666L;
     private ApplicationEventPublisher publisher;
+    @Autowired
+    private Tracer tracer;
 
     @Override
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.publisher = applicationEventPublisher;
     }
-
-    @Autowired
-    private Tracer tracer;
-
-    private static final long UNEXPECT_EXCEPTION_CODE = 88888888L;
-
-    private static final long PARAM_VALIDATED_UN_PASS = 66666666L;
-
 
     @ExceptionHandler(value = Exception.class)
     public ErrorResponse errorAttributes(Exception exception, HttpServletRequest request, HttpServletResponse response) {
@@ -67,14 +63,14 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
         Map paramMap = getParam(request);
         String url = request.getRequestURL().toString();
         if (exception instanceof ExtensionException) {
-            log.warn(MessageFormat.format("当前程序进入到异常捕获器，出错的 url 为：[ {0} ]，出错的参数为：[ {1} ]", url, JSONUtils.serialize(paramMap)), exception);
+            log.warn(MessageFormat.format("当前程序进入到异常捕获器，出错的 url 为：[ {0} ]，出错的参数为：[ {1} ]", url, JsonUtils.serialize(paramMap)), exception);
             ExtensionException expectException = (ExtensionException) exception;
             errorResponse.setCode(expectException.getCode());
             errorResponse.setMessage(expectException.getMessage());
             errorResponse.setStatus(expectException.getStatus());
             data = expectException.getData();
         } else {
-            log.error(MessageFormat.format("当前程序进入到异常捕获器，出错的 url 为：[ {0} ]，出错的参数为：[ {1} ]", url, JSONUtils.serialize(paramMap)), exception);
+            log.error(MessageFormat.format("当前程序进入到异常捕获器，出错的 url 为：[ {0} ]，出错的参数为：[ {1} ]", url, JsonUtils.serialize(paramMap)), exception);
             errorResponse.setCode(UNEXPECT_EXCEPTION_CODE);
             errorResponse.setMessage("服务器发生了点小故障，请联系客服人员！");
             errorResponse.setException(exception.getMessage());
@@ -100,7 +96,7 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
                     tracer.currentSpan().context().traceIdString(),
                     request.getRequestURI(),
                     request.getMethod(),
-                    JSONUtils.serialize(paramMap),
+                    JsonUtils.serialize(paramMap),
                     null,
                     new Date(),
                     exception.getMessage());
@@ -124,7 +120,7 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
                 }
             } catch (IOException ignored) {
             }
-            params.put(LoggerConst.REQUEST_KEY_FORM_PARAM, JSONUtils.serialize(request.getParameterMap()));
+            params.put(LoggerConst.REQUEST_KEY_FORM_PARAM, JsonUtils.serialize(request.getParameterMap()));
             params.put(LoggerConst.REQUEST_KEY_BODY_PARAM, requestBody);
         }
         return params;

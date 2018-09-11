@@ -4,6 +4,12 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * BaseModel
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/11
+ */
 @Data
 public class BaseModel {
 

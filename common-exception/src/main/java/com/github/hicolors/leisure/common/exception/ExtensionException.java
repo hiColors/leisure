@@ -2,6 +2,12 @@ package com.github.hicolors.leisure.common.exception;
 
 import lombok.Getter;
 
+/**
+ * ExtensionException
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/11
+ */
 @Getter
 public class ExtensionException extends RuntimeException {
     /**
