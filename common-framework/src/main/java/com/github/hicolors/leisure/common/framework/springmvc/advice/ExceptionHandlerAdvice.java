@@ -3,7 +3,7 @@ package com.github.hicolors.leisure.common.framework.springmvc.advice;
 import brave.Tracer;
 import com.github.hicolors.leisure.common.exception.ExtensionException;
 import com.github.hicolors.leisure.common.framework.logger.LoggerConst;
-import com.github.hicolors.leisure.common.framework.springmvc.enhance.ErrorEvent;
+import com.github.hicolors.leisure.common.framework.springmvc.advice.enhance.event.ErrorEvent;
 import com.github.hicolors.leisure.common.framework.springmvc.response.ErrorResponse;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
 import com.github.hicolors.leisure.common.utils.Warning;

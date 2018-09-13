@@ -1,4 +1,4 @@
-package com.github.hicolors.leisure.common.framework.springmvc.enhance;
+package com.github.hicolors.leisure.common.framework.springmvc.advice.enhance.event;
 
 import com.github.hicolors.leisure.common.framework.springmvc.response.ErrorResponse;
 
