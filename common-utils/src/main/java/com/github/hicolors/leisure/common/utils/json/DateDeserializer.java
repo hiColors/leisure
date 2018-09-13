@@ -40,8 +40,7 @@ public class DateDeserializer extends JsonDeserializer<Date> {
             }
         }
         throw new UnexpectedException(
-                MessageFormat.format(
-                        "JsonToken = [{0}],是不能处理的类型!", t));
+                MessageFormat.format("JsonToken = [{0}],是不能处理的类型!", t));
     }
 
 }

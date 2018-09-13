@@ -20,7 +20,7 @@ import java.util.Set;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2018/9/11
  */
-@JsonFilter("jsonFilter")
+@JsonFilter("colorsBeanPropertyFilter")
 public class ColorsBeanPropertyFilter extends SimpleBeanPropertyFilter {
 
     private Set<Class<?>> clazzs = Sets.newConcurrentHashSet();

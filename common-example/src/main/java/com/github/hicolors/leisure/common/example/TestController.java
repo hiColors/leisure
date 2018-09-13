@@ -1,5 +1,7 @@
 package com.github.hicolors.leisure.common.example;
 
+import com.github.hicolors.leisure.common.framework.springmvc.json.annotation.JsonBeanFilter;
+import com.github.hicolors.leisure.common.framework.springmvc.json.annotation.JsonResultFilter;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,13 +20,16 @@ public class TestController {
         return JsonUtils.serializeExcludes(person);
     }
 
-    @GetMapping
-    public Person test() {
-        return new Person(1L, "liweichao");
-    }
-
     @GetMapping("/error")
     public Person error() {
         throw new RuntimeException("xxxxx");
+    }
+
+    @GetMapping
+    @JsonResultFilter(
+            values = @JsonBeanFilter(clazz = Class.class, excludes = {"id"})
+    )
+    public Person test() {
+        return new Person(new Class(1L, "一班"), 1L, "liweichao");
     }
 }

@@ -1,5 +1,10 @@
 package com.github.hicolors.leisure.common.utils;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lombok.Builder;
 import lombok.Data;
 import org.junit.Test;
@@ -29,8 +34,13 @@ public class JSONUtilsTest {
 
 @Builder
 @Data
-class Person {
+class Person implements P {
     private Long id;
     private String name;
     private Date birthday;
+}
+
+@JsonFilter(value = "p")
+interface P {
+
 }
