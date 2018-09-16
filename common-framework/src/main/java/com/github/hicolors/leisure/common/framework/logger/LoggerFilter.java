@@ -2,7 +2,6 @@ package com.github.hicolors.leisure.common.framework.logger;
 
 import brave.Tracer;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
-import com.github.hicolors.leisure.common.utils.ReflectionUtils;
 import com.github.hicolors.leisure.common.utils.ThreadLocalUtils;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.MapUtils;
@@ -55,6 +54,35 @@ public class LoggerFilter extends OncePerRequestFilter {
         this.excludePatterns = excludePatterns;
     }
 
+    private static StringBuilder generateResultLogger(Map<String, Map<String, String>> logMap) {
+        StringBuilder resultStr = new StringBuilder();
+        Map<String, String> requestMap = logMap.get(LoggerConst.REQUEST_IDENTITY);
+        Map<String, String> responseMap = logMap.get(LoggerConst.RESPONSE_IDENTITY);
+        //遍历request key, 并将相应的值写入StringBuilder中
+        resultStr.append("\n");
+        for (String requestKey : LoggerConst.REQUEST_KEY_LIST) {
+            String requestValue = requestMap.get(requestKey);
+            if (StringUtils.isBlank(requestValue)) {
+                requestValue = LoggerConst.VALUE_DEFAULT;
+            }
+            appendKeyValue(resultStr, requestKey, requestValue, LoggerConst.REQUEST_PREFIX);
+        }
+        resultStr.append("\n");
+        //遍历response key, 并将相应的值写入StringBuilder中
+        for (String responseKey : LoggerConst.RESPONSE_KEY_LIST) {
+            String responseValue = responseMap.get(responseKey);
+            if (StringUtils.isBlank(responseValue)) {
+                responseValue = LoggerConst.VALUE_DEFAULT;
+            }
+            appendKeyValue(resultStr, responseKey, responseValue, LoggerConst.RESPONSE_PREFIX);
+        }
+
+        return resultStr;
+    }
+
+    private static void appendKeyValue(StringBuilder sb, String key, String value, String prefix) {
+        sb.append(prefix).append(key).append(LoggerConst.KEY_VALUE_SEPERATOR).append(value).append("\n");
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -133,36 +161,6 @@ public class LoggerFilter extends OncePerRequestFilter {
                 responseWrapper.copyBodyToResponse();
             }
         }
-    }
-
-    private static StringBuilder generateResultLogger(Map<String, Map<String, String>> logMap) {
-        StringBuilder resultStr = new StringBuilder();
-        Map<String, String> requestMap = logMap.get(LoggerConst.REQUEST_IDENTITY);
-        Map<String, String> responseMap = logMap.get(LoggerConst.RESPONSE_IDENTITY);
-        //遍历request key, 并将相应的值写入StringBuilder中
-        resultStr.append("\n");
-        for (String requestKey : LoggerConst.REQUEST_KEY_LIST) {
-            String requestValue = requestMap.get(requestKey);
-            if (StringUtils.isBlank(requestValue)) {
-                requestValue = LoggerConst.VALUE_DEFAULT;
-            }
-            appendKeyValue(resultStr, requestKey, requestValue, LoggerConst.REQUEST_PREFIX);
-        }
-        resultStr.append("\n");
-        //遍历response key, 并将相应的值写入StringBuilder中
-        for (String responseKey : LoggerConst.RESPONSE_KEY_LIST) {
-            String responseValue = responseMap.get(responseKey);
-            if (StringUtils.isBlank(responseValue)) {
-                responseValue = LoggerConst.VALUE_DEFAULT;
-            }
-            appendKeyValue(resultStr, responseKey, responseValue, LoggerConst.RESPONSE_PREFIX);
-        }
-
-        return resultStr;
-    }
-
-    private static void appendKeyValue(StringBuilder sb, String key, String value, String prefix) {
-        sb.append(prefix).append(key).append(LoggerConst.KEY_VALUE_SEPERATOR).append(value).append("\n");
     }
 
 }

@@ -70,7 +70,7 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
             errorResponse.setMessage(expectException.getMessage());
             errorResponse.setStatus(expectException.getStatus());
             data = expectException.getData();
-            if(Objects.nonNull(expectException.getCause())){
+            if (Objects.nonNull(expectException.getCause())) {
                 errorResponse.setException(expectException.getCause().getMessage());
             }
         } else {

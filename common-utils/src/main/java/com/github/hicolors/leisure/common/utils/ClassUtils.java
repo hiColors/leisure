@@ -30,10 +30,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class ClassUtils {
 
+    /**
+     * The CGLIB class separator: "$$"
+     */
+    public static final String CGLIB_CLASS_SEPARATOR = "$$";
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassUtils.class);
-
     private static final ColorsClassFactory CLASS_FACTORY = ClassFactory.getFastClassFactory();
-
     private static final ConcurrentHashMap<Class<?>, BeanInfo> BEAN_INFO_CACHE = new ConcurrentHashMap<>();
 
     public static BeanInfo getBeanInfo(Class<?> clazz) {
@@ -425,7 +427,6 @@ public class ClassUtils {
         return proxy != null ? proxy.getMethod() : null;
     }
 
-
     public static <T extends Annotation> T getAnnotation(Class clazz, Class<T> annotClass) {
         return annotClass.cast(clazz.getAnnotation(annotClass));
     }
@@ -499,11 +500,6 @@ public class ClassUtils {
         }
         return clazz;
     }
-
-    /**
-     * The CGLIB class separator: "$$"
-     */
-    public static final String CGLIB_CLASS_SEPARATOR = "$$";
 
     public static Class<?> getUserClass(Class<?> clazz) {
         if (clazz != null && clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {

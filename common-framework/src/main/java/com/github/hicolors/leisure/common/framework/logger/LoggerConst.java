@@ -12,6 +12,8 @@ import java.util.List;
  */
 public class LoggerConst {
 
+    public static final String REQUEST_KEY_BODY_PARAM = "body-param";
+    public static final String REQUEST_KEY_FORM_PARAM = "form-param";
     static final String REQUEST_PREFIX = "> ";
     static final String KEY_VALUE_SEPERATOR = ": ";
     static final String RESPONSE_PREFIX = "< ";
@@ -25,9 +27,6 @@ public class LoggerConst {
     static final String REQUEST_KEY_EXTRA_PARAM = "extra-param";
     static final String REQUEST_KEY_URL = "url";
     static final String REQUEST_KEY_HTTP_METHOD = "http-method";
-    public static final String REQUEST_KEY_BODY_PARAM = "body-param";
-    public static final String REQUEST_KEY_FORM_PARAM = "form-param";
-
     static final String REQUEST_KEY_HEADER = "header";
 
     /**
