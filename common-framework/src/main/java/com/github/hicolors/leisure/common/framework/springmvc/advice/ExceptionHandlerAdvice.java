@@ -29,6 +29,7 @@ import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 异常处理器
@@ -69,6 +70,9 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
             errorResponse.setMessage(expectException.getMessage());
             errorResponse.setStatus(expectException.getStatus());
             data = expectException.getData();
+            if(Objects.nonNull(expectException.getCause())){
+                errorResponse.setException(expectException.getCause().getMessage());
+            }
         } else {
             log.error(MessageFormat.format("当前程序进入到异常捕获器，出错的 url 为：[ {0} ]，出错的参数为：[ {1} ]", url, JsonUtils.serialize(paramMap)), exception);
             errorResponse.setCode(UNEXPECT_EXCEPTION_CODE);

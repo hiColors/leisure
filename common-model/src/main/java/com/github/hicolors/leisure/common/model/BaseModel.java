@@ -1,7 +1,5 @@
 package com.github.hicolors.leisure.common.model;
 
-import lombok.Data;
-
 import java.util.Date;
 
 /**
@@ -10,26 +8,21 @@ import java.util.Date;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2018/9/11
  */
-@Data
-public class BaseModel {
+public interface BaseModel {
 
-    /**
-     * 创建人
-     */
-    protected Long creator;
+    Long getCreator();
 
-    /**
-     * 创建时间
-     */
-    protected Date createTime;
+    BaseModel setCreator(Long creator);
 
-    /**
-     * 最后修改人
-     */
-    protected Long modifier;
+    Date getCreateTime();
 
-    /**
-     * 最后修改时间
-     */
-    protected Date modifyTime;
+    BaseModel setCreateTime(Date createTime);
+
+    Long getModifier();
+
+    BaseModel setModifier(Long modifier);
+
+    Date getModifyTime();
+
+    BaseModel setModifyTime(Date modifyTime);
 }

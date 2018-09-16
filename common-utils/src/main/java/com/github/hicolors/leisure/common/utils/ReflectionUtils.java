@@ -76,6 +76,10 @@ public final class ReflectionUtils {
         return result;
     }
 
+    public static Class getFieldDeclaringClass(Object object, String fieldName) {
+        return Objects.requireNonNull(getDeclaredField(object, fieldName)).getDeclaringClass();
+    }
+
     public static void setFieldValue(Object object, String fieldName, Object value) {
         Field field = getDeclaredField(object, fieldName);
         if (field == null) {

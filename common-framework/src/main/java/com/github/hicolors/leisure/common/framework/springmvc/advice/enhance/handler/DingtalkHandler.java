@@ -33,7 +33,7 @@ public class DingtalkHandler implements ErrorSourceHandler {
     @Override
     public void dispose(ErrorSource t) {
         if (DEFAULT_DINGTALK_VALUE.equals(webhook)) {
-            log.info("服务中未配置钉钉告警机器人地址");
+            log.info("服务中未配置钉钉预警机器人地址");
         } else {
             Warning warning = (Warning) t.getData();
             DingTalkUtils.send(webhook, warning);

@@ -15,6 +15,7 @@
         <module>common-utils</module>
         <module>common-framework</module>
         <module>common-example</module>
+        <module>common-jpa</module>
     </modules>
 
     <properties>
@@ -39,6 +40,9 @@
 
         <httpclient.version>4.5.6</httpclient.version>
 
+        <springboot-druid.version>1.1.10</springboot-druid.version>
+
+        <mysql-connector.version>5.1.47</mysql-connector.version>
 
     </properties>
 
@@ -86,6 +90,11 @@
                 <version>${leisure.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.github.hicolors</groupId>
+                <artifactId>common-jpa</artifactId>
+                <version>${leisure.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -136,6 +145,31 @@
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${springboot-druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>3.22.0-GA</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>3.2.8</version>
+            </dependency>
+
 
         </dependencies>
 

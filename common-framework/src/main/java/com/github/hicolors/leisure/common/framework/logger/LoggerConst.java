@@ -28,11 +28,7 @@ public class LoggerConst {
     public static final String REQUEST_KEY_BODY_PARAM = "body-param";
     public static final String REQUEST_KEY_FORM_PARAM = "form-param";
 
-    static final String REQUEST_KEY_HOST = "host";
-    static final String REQUEST_KEY_CONTENT_TYPE = "content-type";
-    static final String REQUEST_KEY_CONTENT_LENGTH = "content-length";
-    static final String REQUEST_KEY_USER_AGENT = "user-agent";
-    static final String REQUEST_KEY_ACCEPT = "accept";
+    static final String REQUEST_KEY_HEADER = "header";
 
     /**
      * response 记录的key
@@ -60,14 +56,11 @@ public class LoggerConst {
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_URL);
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_HTTP_METHOD);
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_TRACE_ID);
-        REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_CONTENT_TYPE);
-        REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_CONTENT_LENGTH);
-        REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_HOST);
-        REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_USER_AGENT);
-        REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_ACCEPT);
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_EXTRA_PARAM);
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_FORM_PARAM);
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_BODY_PARAM);
+
+        REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_HEADER);
 
         //初始化response中的key add的顺序即为日志显示的顺序
         RESPONSE_KEY_LIST.add(LoggerConst.RESPONSE_KEY_RESPONSE_TIME);

@@ -1,10 +1,8 @@
 package com.github.hicolors.leisure.common.example;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.github.hicolors.leisure.common.jpa.model.JpaBaseModel;
+
+import javax.persistence.*;
 
 /**
  * Person
@@ -12,14 +10,33 @@ import lombok.NoArgsConstructor;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2018/9/11
  */
-@JsonFilter("c")
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class Person {
+@Table(name = "test")
+@Entity
+public class Person extends JpaBaseModel {
 
-    private Class clazz;
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Person setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Person setName(String name) {
+        this.name = name;
+        return this;
+    }
 }

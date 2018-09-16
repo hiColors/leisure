@@ -2,6 +2,7 @@ package com.github.hicolors.leisure.common.framework.logger;
 
 import brave.Tracer;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
+import com.github.hicolors.leisure.common.utils.ReflectionUtils;
 import com.github.hicolors.leisure.common.utils.ThreadLocalUtils;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.MapUtils;
@@ -28,6 +29,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 日志过滤器
@@ -43,43 +45,16 @@ public class LoggerFilter extends OncePerRequestFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerFilter.class);
     private final UrlPathHelper urlPathHelper = new UrlPathHelper();
     private final List<String> excludePatterns;
+
     @Autowired
     private Tracer tracer;
+
     private PathMatcher pathMatcher = new AntPathMatcher();
 
     public LoggerFilter(List<String> excludePatterns) {
         this.excludePatterns = excludePatterns;
     }
 
-    private static StringBuilder generateResultLogger(Map<String, Map<String, String>> logMap) {
-        StringBuilder resultStr = new StringBuilder();
-        Map<String, String> requestMap = logMap.get(LoggerConst.REQUEST_IDENTITY);
-        Map<String, String> responseMap = logMap.get(LoggerConst.RESPONSE_IDENTITY);
-        //遍历request key, 并将相应的值写入StringBuilder中
-        resultStr.append("\n");
-        for (String requestKey : LoggerConst.REQUEST_KEY_LIST) {
-            String requestValue = requestMap.get(requestKey);
-            if (StringUtils.isBlank(requestValue)) {
-                requestValue = LoggerConst.VALUE_DEFAULT;
-            }
-            appendKeyValue(resultStr, requestKey, requestValue, LoggerConst.REQUEST_PREFIX);
-        }
-        resultStr.append("\n");
-        //遍历response key, 并将相应的值写入StringBuilder中
-        for (String responseKey : LoggerConst.RESPONSE_KEY_LIST) {
-            String responseValue = responseMap.get(responseKey);
-            if (StringUtils.isBlank(responseValue)) {
-                responseValue = LoggerConst.VALUE_DEFAULT;
-            }
-            appendKeyValue(resultStr, responseKey, responseValue, LoggerConst.RESPONSE_PREFIX);
-        }
-
-        return resultStr;
-    }
-
-    private static void appendKeyValue(StringBuilder sb, String key, String value, String prefix) {
-        sb.append(prefix).append(key).append(LoggerConst.KEY_VALUE_SEPERATOR).append(value).append("\n");
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -117,9 +92,10 @@ public class LoggerFilter extends OncePerRequestFilter {
                         extraParamMap.put(LoggerConst.REQUEST_KEY_FORM_PARAM, JsonUtils.serialize(request.getParameterMap()));
                     }
                     Enumeration<String> requestEntries = request.getHeaderNames();
+                    Map<String, Object> headers = new ConcurrentHashMap<>(32);
                     while (requestEntries.hasMoreElements()) {
                         String headerName = requestEntries.nextElement();
-                        requestMap.put(headerName.toLowerCase(), requestWrapper.getHeader(headerName));
+                        headers.put(headerName.toLowerCase(), requestWrapper.getHeader(headerName));
                     }
                     /*
                      * response 日志处理
@@ -135,6 +111,7 @@ public class LoggerFilter extends OncePerRequestFilter {
                     requestMap.put(LoggerConst.REQUEST_KEY_HTTP_METHOD, request.getMethod());
                     requestMap.put(LoggerConst.REQUEST_KEY_BODY_PARAM, StringUtils.isNotBlank(bodyParam) ? org.springframework.util.StringUtils.trimAllWhitespace(bodyParam) : LoggerConst.VALUE_DEFAULT);
                     requestMap.put(LoggerConst.REQUEST_KEY_EXTRA_PARAM, JsonUtils.serialize(extraParamMap));
+                    requestMap.put(LoggerConst.REQUEST_KEY_HEADER, JsonUtils.serialize(headers));
 
                     Date responseDate = new Date();
                     responseMap.put(LoggerConst.RESPONSE_KEY_RESPONSE_TIME, LoggerConst.DATE_FORMAT.format(responseDate));
@@ -157,4 +134,35 @@ public class LoggerFilter extends OncePerRequestFilter {
             }
         }
     }
+
+    private static StringBuilder generateResultLogger(Map<String, Map<String, String>> logMap) {
+        StringBuilder resultStr = new StringBuilder();
+        Map<String, String> requestMap = logMap.get(LoggerConst.REQUEST_IDENTITY);
+        Map<String, String> responseMap = logMap.get(LoggerConst.RESPONSE_IDENTITY);
+        //遍历request key, 并将相应的值写入StringBuilder中
+        resultStr.append("\n");
+        for (String requestKey : LoggerConst.REQUEST_KEY_LIST) {
+            String requestValue = requestMap.get(requestKey);
+            if (StringUtils.isBlank(requestValue)) {
+                requestValue = LoggerConst.VALUE_DEFAULT;
+            }
+            appendKeyValue(resultStr, requestKey, requestValue, LoggerConst.REQUEST_PREFIX);
+        }
+        resultStr.append("\n");
+        //遍历response key, 并将相应的值写入StringBuilder中
+        for (String responseKey : LoggerConst.RESPONSE_KEY_LIST) {
+            String responseValue = responseMap.get(responseKey);
+            if (StringUtils.isBlank(responseValue)) {
+                responseValue = LoggerConst.VALUE_DEFAULT;
+            }
+            appendKeyValue(resultStr, responseKey, responseValue, LoggerConst.RESPONSE_PREFIX);
+        }
+
+        return resultStr;
+    }
+
+    private static void appendKeyValue(StringBuilder sb, String key, String value, String prefix) {
+        sb.append(prefix).append(key).append(LoggerConst.KEY_VALUE_SEPERATOR).append(value).append("\n");
+    }
+
 }

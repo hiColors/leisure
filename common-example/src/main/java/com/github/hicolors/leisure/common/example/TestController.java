@@ -24,12 +24,12 @@ public class TestController {
     public Person error() {
         throw new RuntimeException("xxxxx");
     }
-
-    @GetMapping
-    @JsonResultFilter(
-            values = @JsonBeanFilter(clazz = Class.class, excludes = {"id"})
-    )
-    public Person test() {
-        return new Person(new Class(1L, "一班"), 1L, "liweichao");
-    }
+//
+//    @GetMapping
+//    @JsonResultFilter(
+//            values = @JsonBeanFilter(clazz = Person.class, excludes = {"id"})
+//    )
+//    public Person test() {
+//        return new Person(new Class(1L, "一班"), 1L, "liweichao");
+//    }
 }
