@@ -1,9 +1,11 @@
 package com.github.hicolors.leisure.common.example;
 
-import com.github.hicolors.leisure.common.framework.springmvc.json.annotation.JsonBeanFilter;
-import com.github.hicolors.leisure.common.framework.springmvc.json.annotation.JsonResultFilter;
+import com.github.hicolors.leisure.common.model.expression.ColorsExpression;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * TestController
@@ -14,6 +16,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/test")
 public class TestController {
+
+    @Autowired
+    private PersonRepository repository;
+
+    @GetMapping
+    public List<Person> testExpression(List<ColorsExpression> filters) {
+        return repository.findAll(filters);
+    }
 
     @PostMapping("/json")
     public String json(@RequestBody Person person) {

@@ -27,7 +27,6 @@ import java.util.Objects;
  */
 public class ColorsSpecification implements Specification {
 
-    private static final Integer ONE = 2;
     private static final Integer TWO = 2;
 
     private List<ColorsExpression> filters;

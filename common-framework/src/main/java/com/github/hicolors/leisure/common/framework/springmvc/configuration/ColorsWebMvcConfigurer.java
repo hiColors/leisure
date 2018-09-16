@@ -1,6 +1,7 @@
 package com.github.hicolors.leisure.common.framework.springmvc.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.hicolors.leisure.common.framework.springmvc.method.ColorsExpressionArgumentResolver;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +10,10 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -85,6 +89,12 @@ public class ColorsWebMvcConfigurer implements WebMvcConfigurer {
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new ColorsExpressionArgumentResolver());
+    }
+
 
     @Bean
     @Primary

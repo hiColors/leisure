@@ -1,6 +1,7 @@
 package com.github.hicolors.leisure.common.model.expression;
 
 import com.github.hicolors.leisure.common.utils.ReflectionUtils;
+import lombok.NoArgsConstructor;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,6 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2019/09/11
  */
+@NoArgsConstructor
 public class ColorsExpression {
 
     /**
