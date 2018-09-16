@@ -82,7 +82,9 @@ public class ColorsExpression {
     public <T> ColorsExpression(String filterName, T... value) {
         this.initialize(filterName);
         //值参数个数大于1个时，条件必须为 IN 或者 NOTIN
-        if (!(MatchType.IN.equals(this.matchType) || MatchType.NOTIN.equals(this.matchType)) && value.length > 1) {
+        boolean lengthGtOne = value.length > 1;
+        boolean expressionInOrNotin = MatchType.IN.equals(this.matchType) || MatchType.NOTIN.equals(this.matchType);
+        if (!(expressionInOrNotin) && lengthGtOne) {
             throw new ExpressionException("有多个值参数时,查询条件必须为 in 或者 not in 。");
         }
         if (MatchType.IN.equals(this.matchType) || MatchType.NOTIN.equals(this.matchType)) {
@@ -162,7 +164,9 @@ public class ColorsExpression {
 
     @SuppressWarnings("unchecked")
     public <T> T getPropertyValue(Class<T> clazz) {
-        if (clazz.isEnum() || (clazz.isArray() && clazz.getComponentType().isEnum())) {
+        boolean isEnum = clazz.isEnum();
+        boolean isArrayAndcomponentIsEnum = clazz.isArray() && clazz.getComponentType().isEnum();
+        if (isEnum || isArrayAndcomponentIsEnum) {
             AtomicReference<Class> enumClass = new AtomicReference<>(clazz.isArray() ? clazz.getComponentType() : clazz);
             if (propertyValue instanceof String) {
                 return (T) Enum.valueOf(enumClass.get(), (String) propertyValue);

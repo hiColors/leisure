@@ -9,6 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+/**
+ * Class
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/16
+ */
 public class Class {
     private Long id;
     private String name;

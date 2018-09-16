@@ -1,5 +1,6 @@
-package com.github.hicolors.leisure.common.utils;
+package com.github.hicolors.leisure.common.utils.reflect;
 
+import com.github.hicolors.leisure.common.utils.ClassUtils;
 import net.sf.cglib.reflect.FastClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2018/6/9
  */
-public class FastClasses<T> implements IClass<T> {
+public class FastClasses<T> implements ColorsClass<T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassUtils.class);
 
@@ -202,10 +203,10 @@ public class FastClasses<T> implements IClass<T> {
             if (field != null) {
                 field.set(target, value);
             } else {
-//                throw new UtilsException(String.format("没有找到[%s.%s]对应的属性!", clazz.getName(), name));
+                throw new RuntimeException(String.format("没有找到[%s.%s]对应的属性!", clazz.getName(), name));
             }
         } catch (Exception e) {
-//            throw new UtilsException(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 

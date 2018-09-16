@@ -1,6 +1,6 @@
 package com.github.hicolors.leisure.common.jpa.customiz.interceptor;
 
-import com.github.hicolors.leisure.common.jpa.model.JpaBaseModel;
+import com.github.hicolors.leisure.common.jpa.model.BaseJpaModel;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
 
@@ -23,10 +23,10 @@ public class BizInterceptor extends EmptyInterceptor {
 
     @Override
     public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
-        if (entity instanceof JpaBaseModel) {
+        if (entity instanceof BaseJpaModel) {
             Long modifier = 1L;
-            if (Objects.nonNull(((JpaBaseModel) entity).getModifier())) {
-                modifier = ((JpaBaseModel) entity).getModifier();
+            if (Objects.nonNull(((BaseJpaModel) entity).getModifier())) {
+                modifier = ((BaseJpaModel) entity).getModifier();
             }
             int count = 0;
             for (int i = 0; i < propertyNames.length; ++i) {
@@ -47,12 +47,12 @@ public class BizInterceptor extends EmptyInterceptor {
 
     @Override
     public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
-        if (entity instanceof JpaBaseModel) {
+        if (entity instanceof BaseJpaModel) {
             //默认创建人
             Long creator = 1L;
             Date now = new Date();
-            if (Objects.nonNull(((JpaBaseModel) entity).getCreator())) {
-                creator = ((JpaBaseModel) entity).getCreator();
+            if (Objects.nonNull(((BaseJpaModel) entity).getCreator())) {
+                creator = ((BaseJpaModel) entity).getCreator();
             }
             int count = 0;
             for (int i = 0; i < propertyNames.length; i++) {

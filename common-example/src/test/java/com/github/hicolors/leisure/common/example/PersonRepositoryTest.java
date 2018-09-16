@@ -25,8 +25,9 @@ public class PersonRepositoryTest {
 //        p.get();
 
         List<ColorsExpression> list = new ArrayList<>();
-        list.add(new ColorsExpression("BETWEEN_id", "1~2"));
+//        list.add(new ColorsExpression("BETWEEN_id", "1~2"));
+        list.add(new ColorsExpression("IN_id", 1L, 2L));
         List<Person> persons = repository.findAll(list);
-        log.info("{}", persons.size());
+        log.info("查询结果 ： {}", persons.size());
     }
 }

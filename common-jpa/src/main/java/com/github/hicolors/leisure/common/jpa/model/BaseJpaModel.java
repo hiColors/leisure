@@ -1,8 +1,8 @@
 package com.github.hicolors.leisure.common.jpa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.github.hicolors.leisure.common.model.ValidatorGroup;
 import com.github.hicolors.leisure.common.model.BaseModel;
+import com.github.hicolors.leisure.common.model.ValidatorGroup;
 import com.github.hicolors.leisure.common.utils.json.JsonResultFilterSupport;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -23,7 +23,7 @@ import java.util.Date;
 @MappedSuperclass
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties({"hibernate_lazy_initializer", "handler"})
-public abstract class JpaBaseModel implements BaseModel, JsonResultFilterSupport {
+public abstract class BaseJpaModel implements BaseModel, JsonResultFilterSupport {
 
     /**
      * 创建人
@@ -78,7 +78,7 @@ public abstract class JpaBaseModel implements BaseModel, JsonResultFilterSupport
     }
 
     @Override
-    public JpaBaseModel setCreator(Long creator) {
+    public BaseJpaModel setCreator(Long creator) {
         this.creator = creator;
         return this;
     }
@@ -89,7 +89,7 @@ public abstract class JpaBaseModel implements BaseModel, JsonResultFilterSupport
     }
 
     @Override
-    public JpaBaseModel setCreateTime(Date createTime) {
+    public BaseJpaModel setCreateTime(Date createTime) {
         this.createTime = createTime;
         return this;
     }
@@ -100,7 +100,7 @@ public abstract class JpaBaseModel implements BaseModel, JsonResultFilterSupport
     }
 
     @Override
-    public JpaBaseModel setModifier(Long modifier) {
+    public BaseJpaModel setModifier(Long modifier) {
         this.modifier = modifier;
         return this;
     }
@@ -111,7 +111,7 @@ public abstract class JpaBaseModel implements BaseModel, JsonResultFilterSupport
     }
 
     @Override
-    public JpaBaseModel setModifyTime(Date modifyTime) {
+    public BaseJpaModel setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
         return this;
     }

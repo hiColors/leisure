@@ -1,5 +1,6 @@
-package com.github.hicolors.leisure.common.utils;
+package com.github.hicolors.leisure.common.utils.reflect;
 
+import com.github.hicolors.leisure.common.utils.JavassistUtil;
 import javassist.NotFoundException;
 import net.sf.cglib.reflect.FastMethod;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * MethodProxy
+ * 方法代理信息
  *
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2018/6/9

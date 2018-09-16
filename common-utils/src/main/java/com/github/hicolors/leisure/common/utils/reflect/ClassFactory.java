@@ -1,4 +1,4 @@
-package com.github.hicolors.leisure.common.utils;
+package com.github.hicolors.leisure.common.utils.reflect;
 
 /**
  * Class Factory
@@ -12,7 +12,7 @@ public class ClassFactory {
     private ClassFactory() {
     }
 
-    static IClassFactory getFastClassFactory() {
+    public static ColorsClassFactory getFastClassFactory() {
         return new FastClassFactory();
     }
 

@@ -4,8 +4,8 @@ import com.github.hicolors.leisure.common.model.expression.ColorsExpression;
 import com.github.hicolors.leisure.common.model.expression.ExpressionException;
 import com.github.hicolors.leisure.common.model.expression.MatchType;
 import com.github.hicolors.leisure.common.utils.ClassUtils;
-import com.github.hicolors.leisure.common.utils.ObjectProperty;
 import com.github.hicolors.leisure.common.utils.ReflectionUtils;
+import com.github.hicolors.leisure.common.utils.reflect.ObjectProperty;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
@@ -26,6 +26,9 @@ import java.util.Objects;
  * @date 2018/9/16
  */
 public class ColorsSpecification implements Specification {
+
+    private static final Integer ONE = 2;
+    private static final Integer TWO = 2;
 
     private List<ColorsExpression> filters;
 
@@ -90,63 +93,38 @@ public class ColorsSpecification implements Specification {
     }
 
     @SuppressWarnings("unchecked")
-    protected Predicate buildPropertyFilterPredicate(
-            Root root, CriteriaBuilder builder, String propertyName, Object propertyValue, MatchType matchType) {
+    protected Predicate buildPropertyFilterPredicate(Root root, CriteriaBuilder builder, String propertyName, Object propertyValue, MatchType matchType) {
         String[] properties = StringUtils.tokenizeToStringArray(propertyName, "\\.");
-        if (properties.length > 2 || properties.length <= 0) {
+        if (properties.length > TWO || properties.length <= 0) {
             throw new ExpressionException(MessageFormat.format("propertyName[{0}]不正确！", "propertyName"));
         }
         if (MatchType.EQ.equals(matchType)) {
-            if (properties.length == 2) {
-                return builder.equal(root.get(properties[0]).get(properties[1]), propertyValue);
-            } else {
-                return builder.equal(root.get(propertyName), propertyValue);
-            }
+            return properties.length == TWO ? builder.equal(root.get(properties[0]).get(properties[1]), propertyValue) : builder.equal(root.get(propertyName), propertyValue);
         } else if (MatchType.LIKE.equals(matchType)) {
-            if (properties.length == 2) {
-                return builder.like(root.get(properties[0]).get(properties[1]), (String) propertyValue);
-            } else {
-                return builder.like(root.get(propertyName), (String) propertyValue);
-            }
-
-
+            return properties.length == TWO ? builder.like(root.get(properties[0]).get(properties[1]), (String) propertyValue) : builder.like(root.get(propertyName), (String) propertyValue);
         } else if (MatchType.LE.equals(matchType)) {
-            if (properties.length == 2) {
-                return builder.le(root.get(properties[0]).get(properties[1]), (Number) propertyValue);
-            } else {
-                return builder.le(root.get(propertyName), (Number) propertyValue);
-            }
-
-
+            return properties.length == TWO ? builder.le(root.get(properties[0]).get(properties[1]), (Number) propertyValue) : builder.le(root.get(propertyName), (Number) propertyValue);
         } else if (MatchType.LT.equals(matchType)) {
-            if (properties.length == 2) {
-                return builder.lt(root.get(properties[0]).get(properties[1]), (Number) propertyValue);
-            } else {
-                return builder.lt(root.get(propertyName), (Number) propertyValue);
-            }
-
-
+            return properties.length == TWO ? builder.lt(root.get(properties[0]).get(properties[1]), (Number) propertyValue) : builder.lt(root.get(propertyName), (Number) propertyValue);
         } else if (MatchType.GE.equals(matchType)) {
-            if (properties.length == 2) {
-                return builder.ge(root.get(properties[0]).get(properties[1]), (Number) propertyValue);
-            } else {
-                return builder.ge(root.get(propertyName), (Number) propertyValue);
-            }
-
-
+            return properties.length == TWO ? builder.ge(root.get(properties[0]).get(properties[1]), (Number) propertyValue) : builder.ge(root.get(propertyName), (Number) propertyValue);
         } else if (MatchType.GT.equals(matchType)) {
-            if (properties.length == 2) {
-                return builder.gt(root.get(properties[0]).get(properties[1]), (Number) propertyValue);
-            } else {
-                return builder.gt(root.get(propertyName), (Number) propertyValue);
-            }
-
-
+            return properties.length == TWO ? builder.gt(root.get(properties[0]).get(properties[1]), (Number) propertyValue) : builder.gt(root.get(propertyName), (Number) propertyValue);
+        } else if (MatchType.NE.equals(matchType)) {
+            return properties.length == TWO ? builder.notEqual(root.get(properties[0]).get(properties[1]), propertyValue) : builder.notEqual(root.get(propertyName), propertyValue);
+        } else if (MatchType.NULL.equals(matchType)) {
+            return properties.length == TWO ? builder.isNull(root.get(properties[0]).get(properties[1])) : builder.isNull(root.get(propertyName));
+        } else if (MatchType.NOTNULL.equals(matchType)) {
+            return properties.length == TWO ? builder.isNotNull(root.get(properties[0]).get(properties[1])) : builder.isNotNull(root.get(propertyName));
+        } else if (MatchType.EMPTY.equals(matchType)) {
+            return properties.length == TWO ? builder.isEmpty(root.get(properties[0]).get(properties[1])) : builder.isEmpty(root.get(propertyName));
+        } else if (MatchType.NOTEMPTY.equals(matchType)) {
+            return properties.length == TWO ? builder.isNotEmpty(root.get(properties[0]).get(properties[1])) : builder.isNotEmpty(root.get(propertyName));
         } else if (MatchType.IN.equals(matchType)) {
             if (Array.getLength(propertyValue) == 0) {
                 return null;
             }
-            if (properties.length == 2) {
+            if (properties.length == TWO) {
                 return builder.and(root.get(properties[0]).get(properties[1]).in((Object[]) propertyValue));
             } else {
                 return builder.and(root.get(propertyName).in((Object[]) propertyValue));
@@ -155,63 +133,19 @@ public class ColorsSpecification implements Specification {
             if (Array.getLength(propertyValue) == 0) {
                 return null;
             }
-            if (properties.length == 2) {
+            if (properties.length == TWO) {
                 return builder.not(root.get(properties[0]).get(properties[1]).in((Object[]) propertyValue));
             } else {
                 return builder.not(root.get(propertyName).in((Object[]) propertyValue));
             }
-
-
-        } else if (MatchType.NE.equals(matchType)) {
-            if (properties.length == 2) {
-                return builder.notEqual(root.get(properties[0]).get(properties[1]), propertyValue);
-            } else {
-                return builder.notEqual(root.get(propertyName), propertyValue);
-            }
-
-
-        } else if (MatchType.NULL.equals(matchType)) {
-            if (properties.length == 2) {
-                return builder.isNull(root.get(properties[0]).get(properties[1]));
-            } else {
-                return builder.isNull(root.get(propertyName));
-            }
-
-
-        } else if (MatchType.NOTNULL.equals(matchType)) {
-            if (properties.length == 2) {
-                return builder.isNotNull(root.get(properties[0]).get(properties[1]));
-            } else {
-                return builder.isNotNull(root.get(propertyName));
-            }
-
-
-        } else if (MatchType.EMPTY.equals(matchType)) {
-            if (properties.length == 2) {
-                return builder.isEmpty(root.get(properties[0]).get(properties[1]));
-            } else {
-                return builder.isEmpty(root.get(propertyName));
-            }
-
-
-        } else if (MatchType.NOTEMPTY.equals(matchType)) {
-            if (properties.length == 2) {
-                return builder.isNotEmpty(root.get(properties[0]).get(properties[1]));
-            } else {
-                return builder.isNotEmpty(root.get(propertyName));
-            }
-
-
         } else if (MatchType.BETWEEN.equals(matchType)) {
             Comparable x = (Comparable) Array.get(propertyValue, 0);
             Comparable y = (Comparable) Array.get(propertyValue, 1);
-            if (properties.length == 2) {
+            if (properties.length == TWO) {
                 return builder.between(root.get(properties[0]).get(properties[1]), x, y);
             } else {
                 return builder.between(root.get(propertyName), x, y);
             }
-
-
         }
         throw new ExpressionException("不支持的查询");
     }

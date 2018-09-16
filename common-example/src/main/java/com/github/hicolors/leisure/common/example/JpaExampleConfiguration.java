@@ -20,5 +20,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         basePackages = "com.github.hicolors.leisure.common.example",
         repositoryBaseClass = ColorsComplexRepository.class
 )
+/**
+ * JpaExampleConfiguration
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/16
+ */
 public class JpaExampleConfiguration {
 }

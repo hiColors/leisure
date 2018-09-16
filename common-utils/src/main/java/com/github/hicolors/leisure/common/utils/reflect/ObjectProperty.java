@@ -1,5 +1,7 @@
-package com.github.hicolors.leisure.common.utils;
+package com.github.hicolors.leisure.common.utils.reflect;
 
+
+import com.github.hicolors.leisure.common.utils.ClassUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -7,6 +9,12 @@ import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 属性信息
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/16
+ */
 public class ObjectProperty {
 
     private String name;

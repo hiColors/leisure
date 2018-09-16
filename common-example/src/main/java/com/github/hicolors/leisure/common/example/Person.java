@@ -1,6 +1,6 @@
 package com.github.hicolors.leisure.common.example;
 
-import com.github.hicolors.leisure.common.jpa.model.JpaBaseModel;
+import com.github.hicolors.leisure.common.jpa.model.BaseJpaModel;
 
 import javax.persistence.*;
 
@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Table(name = "test")
 @Entity
-public class Person extends JpaBaseModel {
+public class Person extends BaseJpaModel {
 
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

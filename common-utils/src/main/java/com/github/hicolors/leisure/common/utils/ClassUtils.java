@@ -1,5 +1,9 @@
 package com.github.hicolors.leisure.common.utils;
 
+import com.github.hicolors.leisure.common.utils.reflect.ClassFactory;
+import com.github.hicolors.leisure.common.utils.reflect.ColorsClassFactory;
+import com.github.hicolors.leisure.common.utils.reflect.MethodProxy;
+import com.github.hicolors.leisure.common.utils.reflect.ObjectProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +32,7 @@ public class ClassUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassUtils.class);
 
-    public static final IClassFactory CLASS_FACTORY = ClassFactory.getFastClassFactory();
+    private static final ColorsClassFactory CLASS_FACTORY = ClassFactory.getFastClassFactory();
 
     private static final ConcurrentHashMap<Class<?>, BeanInfo> BEAN_INFO_CACHE = new ConcurrentHashMap<>();
 
@@ -279,7 +283,7 @@ public class ClassUtils {
             ParameterizedType type = (ParameterizedType) returnType;
             Type[] typeArguments = type.getActualTypeArguments();
             if ((index >= typeArguments.length) || (index < 0)) {
-//                throw new UtilsException(String.format("你输入的索引 %s", index < 0 ? "不能小于0" : "超出了参数的总数"));
+                throw new RuntimeException(String.format("你输入的索引 %s", index < 0 ? "不能小于0" : "超出了参数的总数"));
             }
             return (Class<T>) typeArguments[index];
         }
@@ -356,7 +360,7 @@ public class ClassUtils {
             ParameterizedType aType = (ParameterizedType) genericFieldType;
             Type[] fieldArgTypes = aType.getActualTypeArguments();
             if ((index >= fieldArgTypes.length) || (index < 0)) {
-//                throw new UtilsException("你输入的索引" + (index < 0 ? "不能小于0" : "超出了参数的总数"));
+                throw new RuntimeException("你输入的索引" + (index < 0 ? "不能小于0" : "超出了参数的总数"));
             }
             return (Class<T>) fieldArgTypes[index];
         }
