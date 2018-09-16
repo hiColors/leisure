@@ -10,27 +10,11 @@ spring:
   application:
     name: common-example
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    sql-script-encoding: UTF-8
-    druid:
-      driver-class-name: com.mysql.jdbc.Driver
-      filters: stat
-      maxActive: 20
-      initialSize: 1
-      maxWait: 60000
-      minIdle: 1
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: select 'x'
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      poolPreparedStatements: true
-      maxOpenPreparedStatements: 20
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://liweichao.xyz:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: root
+    password: root
 
-      url: jdbc:mysql://liweichao.xyz:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
-      username: root
-      password: root
   jpa:
     hibernate:
       ddl-auto: validate
