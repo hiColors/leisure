@@ -15,5 +15,4 @@ public class ExpressionException extends IllegalArgumentException {
     public ExpressionException(String msg, Throwable cause) {
         super(msg, cause);
     }
-
 }

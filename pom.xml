@@ -17,6 +17,7 @@
         <module>common-example</module>
         <module>common-jpa</module>
         <module>common-rocketmq</module>
+        <module>common-fegin</module>
     </modules>
 
     <properties>

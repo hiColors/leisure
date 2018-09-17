@@ -1,6 +1,6 @@
 package com.github.hicolors.leisure.common.framework.springmvc.advice.enhance.event;
 
-import com.github.hicolors.leisure.common.framework.springmvc.response.ErrorResponse;
+import com.github.hicolors.leisure.common.model.response.ErrorResponse;
 import org.springframework.context.ApplicationEvent;
 
 /**

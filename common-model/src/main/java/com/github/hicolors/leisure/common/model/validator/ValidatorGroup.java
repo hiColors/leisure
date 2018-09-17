@@ -1,4 +1,4 @@
-package com.github.hicolors.leisure.common.model;
+package com.github.hicolors.leisure.common.model.validator;
 
 /**
  * 参数校验分组信息 常量

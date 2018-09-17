@@ -1,10 +1,8 @@
-package com.github.hicolors.leisure.common.framework.springmvc.response;
+package com.github.hicolors.leisure.common.model.response;
 
 import com.github.hicolors.leisure.common.exception.HttpStatus;
 import lombok.Data;
 
-import javax.servlet.http.HttpServletRequest;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,9 +56,9 @@ public class ErrorResponse {
      */
     private List<Error> errors;
 
-    public ErrorResponse(HttpServletRequest request) {
-        this.timestamp = new Timestamp(System.currentTimeMillis());
-        this.path = request.getRequestURI();
+    public ErrorResponse(Date timestamp, String path) {
+        this.timestamp = timestamp;
+        this.path = path;
     }
 
     public ErrorResponse setStatus(Integer status) {

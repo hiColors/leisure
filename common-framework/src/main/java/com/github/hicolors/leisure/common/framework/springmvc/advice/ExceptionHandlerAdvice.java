@@ -4,7 +4,7 @@ import brave.Tracer;
 import com.github.hicolors.leisure.common.exception.ExtensionException;
 import com.github.hicolors.leisure.common.framework.logger.LoggerConst;
 import com.github.hicolors.leisure.common.framework.springmvc.advice.enhance.event.ErrorEvent;
-import com.github.hicolors.leisure.common.framework.springmvc.response.ErrorResponse;
+import com.github.hicolors.leisure.common.model.response.ErrorResponse;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
 import com.github.hicolors.leisure.common.utils.Warning;
 import lombok.extern.slf4j.Slf4j;
@@ -57,13 +57,16 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
     @ExceptionHandler(value = Exception.class)
     public ErrorResponse errorAttributes(Exception exception, HttpServletRequest request, HttpServletResponse response) {
 
-        //拼装返回结果
-        ErrorResponse errorResponse = new ErrorResponse(request);
-
         //特定异常处理所需要的参数
         Object data;
         Map paramMap = getParam(request);
         String url = request.getRequestURL().toString();
+        String uri = request.getRequestURI();
+
+        //拼装返回结果
+        ErrorResponse errorResponse = new ErrorResponse(new Date(), uri);
+
+
         if (exception instanceof ExtensionException) {
             log.warn(MessageFormat.format("当前程序进入到异常捕获器，出错的 url 为：[ {0} ]，出错的参数为：[ {1} ]", url, JsonUtils.serialize(paramMap)), exception);
             ExtensionException expectException = (ExtensionException) exception;
@@ -99,7 +102,7 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
             }
             data = new Warning("服务发生非预期异常",
                     tracer.currentSpan().context().traceIdString(),
-                    request.getRequestURI(),
+                    uri,
                     request.getMethod(),
                     JsonUtils.serialize(paramMap),
                     null,

@@ -2,7 +2,7 @@ package com.github.hicolors.leisure.common.jpa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.hicolors.leisure.common.model.BaseModel;
-import com.github.hicolors.leisure.common.model.ValidatorGroup;
+import com.github.hicolors.leisure.common.model.validator.ValidatorGroup;
 import com.github.hicolors.leisure.common.utils.json.JsonResultFilterSupport;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
