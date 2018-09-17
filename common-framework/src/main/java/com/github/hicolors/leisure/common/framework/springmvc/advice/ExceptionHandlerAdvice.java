@@ -44,6 +44,7 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
 
     private static final long UNEXPECT_EXCEPTION_CODE = 88888888L;
     private static final long PARAM_VALIDATED_UN_PASS = 66666666L;
+
     private ApplicationEventPublisher publisher;
     @Autowired
     private Tracer tracer;

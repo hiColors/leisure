@@ -16,6 +16,7 @@
         <module>common-framework</module>
         <module>common-example</module>
         <module>common-jpa</module>
+        <module>common-rocketmq</module>
     </modules>
 
     <properties>
@@ -50,6 +51,8 @@
         <httpclient.version>4.5.6</httpclient.version>
         <cglib.version>3.2.8</cglib.version>
         <javassist.version>3.22.0-GA</javassist.version>
+
+        <aliyun-ons.version>1.7.8.Final</aliyun-ons.version>
 
     </properties>
 
@@ -182,6 +185,15 @@
                 <artifactId>cglib</artifactId>
                 <version>${cglib.version}</version>
             </dependency>
+
+
+            <dependency>
+                <groupId>com.aliyun.openservices</groupId>
+                <artifactId>ons-client</artifactId>
+                <version>${aliyun-ons.version}</version>
+            </dependency>
+
+
 
         </dependencies>
 
