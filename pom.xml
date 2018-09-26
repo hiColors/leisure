@@ -14,10 +14,13 @@
         <module>common-model</module>
         <module>common-utils</module>
         <module>common-framework</module>
-        <module>common-example</module>
         <module>common-jpa</module>
         <module>common-rocketmq</module>
         <module>common-fegin</module>
+
+        <module>common-example-a</module>
+        <module>common-example-b</module>
+
     </modules>
 
     <properties>
@@ -28,7 +31,7 @@
         <leisure.version>1.0.0-SNAPSHOT</leisure.version>
 
         <!-- spring -->
-        <spring-platform.version>Cairo-SR3</spring-platform.version>
+        <spring-platform.version>Cairo-SR4</spring-platform.version>
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
 
         <!-- 第三方 spring boot starter -->
