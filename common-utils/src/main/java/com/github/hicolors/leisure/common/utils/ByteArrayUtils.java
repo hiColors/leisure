@@ -3,6 +3,12 @@ package com.github.hicolors.leisure.common.utils;
 import java.io.*;
 import java.nio.charset.Charset;
 
+/**
+ * ByteArrayUtils
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/26
+ */
 public class ByteArrayUtils {
 
     /**

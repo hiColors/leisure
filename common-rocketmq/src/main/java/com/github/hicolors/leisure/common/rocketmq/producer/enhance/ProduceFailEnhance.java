@@ -13,6 +13,7 @@ public interface ProduceFailEnhance {
     /**
      * 当前 handler 是否支持当前 消息
      *
+     * @param producerId
      * @param msg
      * @return
      */
@@ -21,7 +22,9 @@ public interface ProduceFailEnhance {
     /**
      * 处理逻辑
      *
+     * @param producerId
      * @param msg
+     * @param e
      */
     void enhance(String producerId, Message msg, Exception e);
 

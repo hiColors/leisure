@@ -18,6 +18,12 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
+/**
+ * RocketMqConfiguration
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/26
+ */
 @Configuration
 @EnableConfigurationProperties({
         RocketMqProperties.class,

@@ -6,7 +6,7 @@ package com.github.hicolors.leisure.common.rocketmq.consumer;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2018/8/9
  */
-public abstract class RocketMqConsumerProcessor implements RocketMqConsumer {
+public abstract class AbstractRocketMqConsumer implements RocketMqConsumer {
 
     private final String consumerId;
 
@@ -19,18 +19,18 @@ public abstract class RocketMqConsumerProcessor implements RocketMqConsumer {
     private Integer triggerNotificationTimes = 16;
 
 
-    protected RocketMqConsumerProcessor(String consumerId, String topic) {
+    protected AbstractRocketMqConsumer(String consumerId, String topic) {
         this.consumerId = consumerId;
         this.topic = topic;
     }
 
-    protected RocketMqConsumerProcessor(String consumerId, String topic, String tag) {
+    protected AbstractRocketMqConsumer(String consumerId, String topic, String tag) {
         this.consumerId = consumerId;
         this.topic = topic;
         this.tag = tag;
     }
 
-    protected RocketMqConsumerProcessor(String consumerId, String topic, String tag, Integer threadNums, Integer triggerNotificationTimes) {
+    protected AbstractRocketMqConsumer(String consumerId, String topic, String tag, Integer threadNums, Integer triggerNotificationTimes) {
         this.consumerId = consumerId;
         this.topic = topic;
         this.tag = tag;
