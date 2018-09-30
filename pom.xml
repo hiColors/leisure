@@ -20,6 +20,7 @@
 
         <module>common-example-a</module>
         <module>common-example-b</module>
+        <module>common-example-zuul</module>
 
     </modules>
 

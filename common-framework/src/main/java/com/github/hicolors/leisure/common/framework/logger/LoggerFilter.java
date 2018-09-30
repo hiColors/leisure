@@ -117,7 +117,7 @@ public class LoggerFilter extends OncePerRequestFilter {
                     String bodyParam = new String(requestWrapper.getContentAsByteArray(), requestWrapper.getCharacterEncoding());
                     extraParamMap.putAll(ExtraParamUtils.getAll());
                     if (MapUtils.isNotEmpty(requestWrapper.getParameterMap())) {
-                        extraParamMap.put(LoggerConst.REQUEST_KEY_FORM_PARAM, JsonUtils.serialize(request.getParameterMap()));
+                        requestMap.put(LoggerConst.REQUEST_KEY_FORM_PARAM, JsonUtils.serialize(request.getParameterMap()));
                     }
                     Enumeration<String> requestEntries = request.getHeaderNames();
                     Map<String, Object> headers = new ConcurrentHashMap<>(32);
