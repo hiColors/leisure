@@ -11,6 +11,12 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+/**
+ * feign client 透传 header 拦截器
+ *
+ * @author weichao.li (liweichao0102@gmail.com)
+ * @date 2018/9/30
+ */
 @Component
 public class PenetrateHeadersRequestInterceptor implements RequestInterceptor {
 
@@ -24,12 +30,10 @@ public class PenetrateHeadersRequestInterceptor implements RequestInterceptor {
         List<String> headerList = Arrays.asList(penetrateHeaders.split(SPLIT_CHARACTER));
         Set<String> headers = new HashSet<>();
         headerList.forEach(e -> headers.add(e.toLowerCase()));
-
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (Objects.isNull(attributes)) {
             return;
         }
-
         HttpServletRequest request = attributes.getRequest();
         Enumeration<String> headerNames = request.getHeaderNames();
         if (headerNames != null) {
@@ -45,6 +49,4 @@ public class PenetrateHeadersRequestInterceptor implements RequestInterceptor {
             }
         }
     }
-
-
 }

@@ -11,10 +11,10 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.github.hicolors.leisure.common.utils.json.ColorsBeanPropertyFilter;
 import com.github.hicolors.leisure.common.utils.json.DateDeserializer;
 import com.github.hicolors.leisure.common.utils.json.DateSerializer;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * JSONUtils
@@ -124,6 +124,59 @@ public class JsonUtils {
 
     public static ObjectMapper getObjectMapper() {
         return objectMapper;
+    }
+
+    /**
+     * json 转换成 map
+     *
+     * @param json
+     * @return
+     */
+    public static Map<String, Collection<String>> buildMap(String json) {
+        Map<String, Collection<String>> result = new HashMap<>(128);
+        try {
+            JsonNode jsonNode = objectMapper.readTree(json);
+            buildMap(jsonNode, "", result);
+        } catch (IOException e) {
+            throw new RuntimeException("json 字符串解析出错", e);
+        }
+        return result;
+    }
+
+    private static void buildMap(JsonNode jsonNode, String path, Map<String, Collection<String>> queries) {
+        // 叶子节点
+        if (!jsonNode.isContainerNode()) {
+            if (jsonNode.isNull()) {
+                return;
+            }
+            Collection<String> values = queries.get(path);
+            if (null == values) {
+                values = new ArrayList<>();
+                queries.put(path, values);
+            }
+            values.add(jsonNode.asText());
+            return;
+        }
+        // 数组节点
+        if (jsonNode.isArray()) {
+            Iterator<JsonNode> it = jsonNode.elements();
+            while (it.hasNext()) {
+                buildMap(it.next(), path, queries);
+            }
+        } else {
+            Iterator<Map.Entry<String, JsonNode>> it = jsonNode.fields();
+            while (it.hasNext()) {
+                Map.Entry<String, JsonNode> entry = it.next();
+                if (StringUtils.isNotBlank(path)) {
+                    buildMap(entry.getValue(), path + "." + entry.getKey(), queries);
+
+                }
+                // 根节点
+                else {
+                    buildMap(entry.getValue(), entry.getKey(), queries);
+                }
+            }
+        }
     }
 
     public interface FilterLoader {
