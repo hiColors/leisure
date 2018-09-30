@@ -30,6 +30,7 @@ public final class ReflectionUtils {
         DateConverter dc = new DateConverter();
         dc.setUseLocaleFormat(true);
         dc.setPatterns(new String[]{
+                "yyyy-MM-dd HH:mm:ss.SSS",
                 "yyyy-MM-dd HH:mm:ss",
                 "yyyy-MM-dd HH:mm",
                 "yyyy-MM-dd",

@@ -1,11 +1,14 @@
 package com.github.hicolors.leisure.common.model.expression;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.hicolors.leisure.common.utils.ReflectionUtils;
-import lombok.NoArgsConstructor;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -15,88 +18,140 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2019/09/11
  */
-@NoArgsConstructor
 public class ColorsExpression {
 
     /**
      * 分隔符
      */
+    @JsonIgnore
     private static final String OR_SEPARATOR = "_OR_";
 
     /**
-     * 名称
-     */
-    private String[] propertyNames;
-    /**
-     * 类型
-     */
-    private Class<?> propertyType;
-    /**
-     * 值
-     */
-    private Object propertyValue;
-    /**
-     * 条件类型
-     */
-    private MatchType matchType;
-    /**
-     * 完整表达式
+     * 完整 name 表达式
      */
     private String filterName;
 
-    public ColorsExpression(String filterName) {
-        this.filterName = filterName;
-        String matchTypeCode = StringUtils.substringBefore(filterName, "_");
-        this.matchType = MatchType.get(matchTypeCode);
-        if (Objects.isNull(this.matchType)) {
+    /**
+     * 完整 value 表达式
+     */
+    private String[] filterValues;
+
+    /**
+     * 属性名称
+     */
+    @JsonIgnore
+    private String[] propertyNames;
+
+    /**
+     * 类型
+     */
+    @JsonIgnore
+    private Class<?> propertyType;
+
+    /**
+     * 值
+     */
+    @JsonIgnore
+    private Object propertyValue;
+
+    /**
+     * 条件类型
+     */
+    @JsonIgnore
+    private MatchType matchType;
+
+    public ColorsExpression() {
+    }
+
+    private void initialize(String filterName) {
+        this.setFilterName(filterName);
+        String matchTypeStr = StringUtils.substringBefore(filterName, "_");
+        MatchType matchType = MatchType.get(matchTypeStr);
+        if (Objects.isNull(matchType)) {
             throw new ExpressionException(String.format("filter 名称 %s 没有按规则编写,无法得到属性比较类型。", filterName));
         }
-        if (!(MatchType.NULL.equals(this.matchType)
-                || MatchType.NOTNULL.equals(this.matchType)
-                || MatchType.EMPTY.equals(this.matchType)
-                || MatchType.NOTEMPTY.equals(this.matchType))) {
+        this.setMatchType(matchType);
+        this.setPropertyType(String.class);
+        String propertyNameStr = StringUtils.substringAfter(filterName, "_");
+        String[] propertyNames = propertyNameStr.split(OR_SEPARATOR);
+        if (propertyNames.length <= 0) {
+            throw new ExpressionException(String.format("filter 名称 %s 没有按规则编写,无法得到属性比较类型。", filterName));
+        }
+        this.setPropertyNames(propertyNames);
+    }
+
+
+    public ColorsExpression(String filterName, String[] filterValues) {
+        initialize(filterName);
+        this.setFilterValues(filterValues);
+        if (this.getMatchType().isExistParams()) {
+            withoutArg();
+        } else if (this.getMatchType().isMultiParams()) {
+            List<String> tValues = new ArrayList<>();
+            assert filterValues != null;
+            for (String val : filterValues) {
+                tValues.addAll(Arrays.asList(StringUtils.split(val, ",; \t\n")));
+            }
+            withMoreTValues(this, tValues.toArray(new String[tValues.size()]));
+        } else {
+            if (filterValues.length != 0 && StringUtils.isNotBlank(filterValues[0])) {
+                withString(this, filterValues[0]);
+            }
+        }
+    }
+
+
+    public void withoutArg() {
+        MatchType matchType = this.getMatchType();
+        if (Objects.isNull(matchType)) {
+            throw new ExpressionException("ColorsExpression withoutArg 构造时出错！");
+        }
+        if (!(MatchType.NULL.equals(matchType) || MatchType.NOTNULL.equals(matchType) || MatchType.EMPTY.equals(matchType) || MatchType.NOTEMPTY.equals(matchType))) {
             throw new ExpressionException("没有设置 value 时,查询条件必须为 is null,not null,empty,not empty。");
         }
-        String propertyNameStr = StringUtils.substringAfter(filterName, "_");
-        this.propertyNames = propertyNameStr.split(OR_SEPARATOR);
-        this.propertyValue = new Object();
+        this.setPropertyValue(new Object());
     }
 
-    public ColorsExpression(String filterName, Enum<?> value) {
-        this.initialize(filterName);
-        this.propertyValue = value;
-    }
-
-    public ColorsExpression(String filterName, Enum<?>... value) {
-        this.initialize(filterName);
-        if (!(MatchType.IN.equals(this.matchType) || MatchType.NOTIN.equals(this.matchType))) {
-            throw new ExpressionException("有多个条件时,查询条件必须为 in 或者 not in 。");
-        }
-        this.propertyValue = value;
-    }
-
-    public ColorsExpression(String filterName, String value) {
-        this.initialize(filterName);
+    public void withEnum(Enum<?> value) {
         this.setPropertyValue(value);
     }
 
-    @SafeVarargs
-    public <T> ColorsExpression(String filterName, T... value) {
-        this.initialize(filterName);
+    public void withMoreEnums(ColorsExpression ce, Enum<?>... value) {
+        MatchType matchType = ce.getMatchType();
+        if (Objects.isNull(matchType)) {
+            throw new ExpressionException("ColorsExpression withMoreEnums 构造时出错！");
+        }
+        if (!(MatchType.IN.equals(matchType) || MatchType.NOTIN.equals(matchType))) {
+            throw new ExpressionException("有多个条件时,查询条件必须为 in 或者 not in 。");
+        }
+        ce.setPropertyValue(value);
+    }
+
+    public void withString(ColorsExpression ce, String value) {
+        ce.setPropertyValue(value);
+    }
+
+    public <T> void withMoreTValues(T... value) {
+        MatchType matchType = this.getMatchType();
+        if (Objects.isNull(matchType)) {
+            throw new ExpressionException("ColorsExpression withMoreTValues 构造时出错！");
+        }
         //值参数个数大于1个时，条件必须为 IN 或者 NOTIN
         boolean lengthGtOne = value.length > 1;
-        boolean expressionInOrNotin = MatchType.IN.equals(this.matchType) || MatchType.NOTIN.equals(this.matchType);
+
+        boolean expressionInOrNotin = MatchType.IN.equals(matchType) || MatchType.NOTIN.equals(matchType);
+
         if (!(expressionInOrNotin) && lengthGtOne) {
             throw new ExpressionException("有多个值参数时,查询条件必须为 in 或者 not in 。");
         }
-        if (MatchType.IN.equals(this.matchType) || MatchType.NOTIN.equals(this.matchType)) {
-            Object array = this.propertyType.isAssignableFrom(Enum.class) ? new String[value.length] : Array.newInstance(this.propertyType, Array.getLength(value));
+        if (MatchType.IN.equals(matchType) || MatchType.NOTIN.equals(matchType)) {
+            Object array = this.getPropertyType().isAssignableFrom(Enum.class) ? new String[value.length] : Array.newInstance(this.getPropertyType(), Array.getLength(value));
             for (int i = 0; i < Array.getLength(value); i++) {
-                Array.set(array, i, this.propertyType == Enum.class ? Array.get(value, i).toString() : BeanUtilsBean.getInstance().getConvertUtils().convert(Array.get(value, i).toString(), this.propertyType));
+                Array.set(array, i, this.getPropertyType() == Enum.class ? Array.get(value, i).toString() : BeanUtilsBean.getInstance().getConvertUtils().convert(Array.get(value, i).toString(), this.getPropertyType()));
             }
-            this.propertyValue = array;
+            this.setPropertyValue(array);
         } else {
-            setPropertyValue(value[0].toString());
+            this.setPropertyValue(value[0].toString());
         }
     }
 
@@ -115,22 +170,8 @@ public class ColorsExpression {
         }
     }
 
-    private void initialize(String filterName) {
-        this.filterName = filterName;
-        String matchTypeStr = StringUtils.substringBefore(filterName, "_");
-        this.matchType = MatchType.get(matchTypeStr);
-        if (Objects.isNull(this.matchType)) {
-            throw new ExpressionException(String.format("filter 名称 %s 没有按规则编写,无法得到属性比较类型。", filterName));
-        }
-        this.propertyType = String.class;
-        String propertyNameStr = StringUtils.substringAfter(filterName, "_");
-        this.propertyNames = propertyNameStr.split(OR_SEPARATOR);
-        if (this.propertyNames.length <= 0) {
-            throw new ExpressionException(String.format("filter 名称 %s 没有按规则编写,无法得到属性比较类型。", filterName));
-        }
-    }
 
-    public boolean isMultiProperty() {
+    public boolean hasMultiProperty() {
         return this.propertyNames.length > 1;
     }
 
@@ -143,6 +184,8 @@ public class ColorsExpression {
         return this;
     }
 
+
+    @JsonIgnore
     public String getPropertyName() {
         if (this.propertyNames.length > 1) {
             throw new ExpressionException("此处只允许有一个属性名称。");
@@ -211,4 +254,12 @@ public class ColorsExpression {
         return this;
     }
 
+    public String[] getFilterValues() {
+        return filterValues;
+    }
+
+    public ColorsExpression setFilterValues(String[] filterValues) {
+        this.filterValues = filterValues;
+        return this;
+    }
 }

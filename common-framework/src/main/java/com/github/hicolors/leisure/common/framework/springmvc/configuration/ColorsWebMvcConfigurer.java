@@ -1,7 +1,10 @@
 package com.github.hicolors.leisure.common.framework.springmvc.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.github.hicolors.leisure.common.framework.springmvc.method.ColorsExpressionArgumentResolver;
+import com.github.hicolors.leisure.common.model.expression.ColorsExpression;
+import com.github.hicolors.leisure.common.model.expression.ColorsExpressionJsonSerializer;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -99,6 +102,9 @@ public class ColorsWebMvcConfigurer implements WebMvcConfigurer {
     @Bean
     @Primary
     public ObjectMapper objectMapper() {
-        return JsonUtils.getObjectMapper();
+        ObjectMapper objectMapper = JsonUtils.getObjectMapper();
+        objectMapper.registerModule(new SimpleModule().addSerializer(ColorsExpression.class, new ColorsExpressionJsonSerializer()));
+        return objectMapper;
+
     }
 }

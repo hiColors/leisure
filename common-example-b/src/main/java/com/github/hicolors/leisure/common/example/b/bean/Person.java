@@ -1,6 +1,9 @@
 package com.github.hicolors.leisure.common.example.b.bean;
 
 import com.github.hicolors.leisure.common.jpa.model.BaseJpaModel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -12,6 +15,9 @@ import javax.persistence.*;
  */
 @Table(name = "test")
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Person extends BaseJpaModel {
 
     @Column(name = "id")
@@ -22,21 +28,4 @@ public class Person extends BaseJpaModel {
     @Column(name = "name")
     private String name;
 
-    public Long getId() {
-        return id;
-    }
-
-    public Person setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Person setName(String name) {
-        this.name = name;
-        return this;
-    }
 }

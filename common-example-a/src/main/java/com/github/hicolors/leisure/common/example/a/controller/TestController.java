@@ -1,9 +1,12 @@
 package com.github.hicolors.leisure.common.example.a.controller;
 
 import com.github.hicolors.leisure.common.example.a.bean.Person;
+import com.github.hicolors.leisure.common.example.a.bean.XXX;
 import com.github.hicolors.leisure.common.example.a.repository.PersonRepository;
+import com.github.hicolors.leisure.common.example.a.sdk.ExampleBClient;
 import com.github.hicolors.leisure.common.model.expression.ColorsExpression;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +20,20 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/test")
+@Slf4j
 public class TestController {
 
     @Autowired
     private PersonRepository repository;
 
+    @Autowired
+    private ExampleBClient client;
+
     @GetMapping
     public List<Person> testExpression(List<ColorsExpression> filters) {
-        return repository.findAll(filters);
+        XXX xx = client.testObject(new XXX(1L, "2"));
+        log.info(JsonUtils.serialize(xx));
+        return client.testExpression(filters);
     }
 
     @PostMapping("/json")

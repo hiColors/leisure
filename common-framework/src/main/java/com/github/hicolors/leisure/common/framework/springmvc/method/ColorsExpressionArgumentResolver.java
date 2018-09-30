@@ -2,7 +2,6 @@ package com.github.hicolors.leisure.common.framework.springmvc.method;
 
 import com.github.hicolors.leisure.common.model.expression.ColorsExpression;
 import com.github.hicolors.leisure.common.model.expression.MatchType;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.WebDataBinder;
@@ -14,8 +13,8 @@ import javax.servlet.ServletRequest;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 自定义表达式语言 参数解析器
@@ -67,32 +66,16 @@ public class ColorsExpressionArgumentResolver extends AbstractMethodArgumentReso
                                          NativeWebRequest request,
                                          MethodParameter parameter) {
         ServletRequest servletRequest = prepareServletRequest(request);
+
         List<Object> target = (List<Object>) binder.getTarget();
         for (String paramName : servletRequest.getParameterMap().keySet()) {
             String[] values = request.getParameterValues(paramName);
             MatchType matchType = MatchType.get(paramName);
-            assert matchType != null;
-            if (matchType.isExistParams()) {
-                assert target != null;
-                target.add(new ColorsExpression(paramName));
-            } else if (matchType.isMultiParams()) {
-                List<String> tValues = new ArrayList<>();
-                assert values != null;
-                for (String val : values) {
-                    tValues.addAll(Arrays.asList(org.springframework.util.StringUtils.tokenizeToStringArray(val, ",; \t\n")));
-                }
-                assert target != null;
-                target.add(new ColorsExpression(paramName, tValues.toArray(new String[tValues.size()])));
-            } else {
-                assert values != null;
-                if (values.length != 0 && StringUtils.isNotBlank(values[0])) {
-                    assert target != null;
-                    target.add(new ColorsExpression(paramName, values[0]));
-                }
+            if (Objects.nonNull(matchType)) {
+                target.add(new ColorsExpression(paramName, values));
             }
         }
     }
-
 
     @Override
     protected boolean isXxxModelAttribute(String parameterName) {

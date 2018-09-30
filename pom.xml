@@ -48,6 +48,8 @@
         <!-- mysql connector -->
         <mysql-connector.version>5.1.47</mysql-connector.version>
 
+        <h2database.version>1.4.197</h2database.version>
+
         <!-- 乱七八糟 -->
         <lombok.version>1.18.2</lombok.version>
         <jackson-databind.version>2.9.6</jackson-databind.version>
@@ -107,6 +109,12 @@
             <dependency>
                 <groupId>com.github.hicolors</groupId>
                 <artifactId>common-jpa</artifactId>
+                <version>${leisure.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.hicolors</groupId>
+                <artifactId>common-fegin</artifactId>
                 <version>${leisure.version}</version>
             </dependency>
 
@@ -176,6 +184,12 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2database.version}</version>
             </dependency>
 
             <dependency>
