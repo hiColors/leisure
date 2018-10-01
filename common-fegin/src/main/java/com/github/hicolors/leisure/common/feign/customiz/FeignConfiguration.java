@@ -1,6 +1,7 @@
 package com.github.hicolors.leisure.common.feign.customiz;
 
 
+import com.github.hicolors.leisure.common.feign.customiz.code.ColorsErrorDecoder;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
 import feign.codec.Decoder;
 import feign.codec.Encoder;

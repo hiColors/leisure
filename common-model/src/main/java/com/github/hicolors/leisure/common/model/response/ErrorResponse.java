@@ -1,7 +1,9 @@
 package com.github.hicolors.leisure.common.model.response;
 
 import com.github.hicolors.leisure.common.exception.HttpStatus;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +16,8 @@ import java.util.List;
  * @date 2018/9/11
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ErrorResponse {
 
     /**

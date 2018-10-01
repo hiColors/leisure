@@ -3,6 +3,7 @@ package com.github.hicolors.leisure.common.example.b.controller;
 import com.github.hicolors.leisure.common.example.b.bean.Person;
 import com.github.hicolors.leisure.common.example.b.bean.XXX;
 import com.github.hicolors.leisure.common.example.b.repository.PersonRepository;
+import com.github.hicolors.leisure.common.exception.BusinessException;
 import com.github.hicolors.leisure.common.model.expression.ColorsExpression;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,9 @@ public class TestController {
 
     @GetMapping
     public List<Person> testExpression(List<ColorsExpression> filters) {
-        log.info(filters.toString());
-        return repository.findAll(filters);
+        throw new BusinessException(1L, "xxx", "xxx");
+//        log.info(filters.toString());
+//        return repository.findAll(filters);
     }
 
     @GetMapping("/test")
