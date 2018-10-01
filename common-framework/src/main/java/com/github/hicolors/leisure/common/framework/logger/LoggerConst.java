@@ -55,11 +55,11 @@ public class LoggerConst {
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_URL);
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_HTTP_METHOD);
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_TRACE_ID);
+        REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_HEADER);
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_EXTRA_PARAM);
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_FORM_PARAM);
         REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_BODY_PARAM);
 
-        REQUEST_KEY_LIST.add(LoggerConst.REQUEST_KEY_HEADER);
 
         //初始化response中的key add的顺序即为日志显示的顺序
         RESPONSE_KEY_LIST.add(LoggerConst.RESPONSE_KEY_RESPONSE_TIME);
