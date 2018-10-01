@@ -33,7 +33,7 @@ public class ColorsErrorDecoder implements ErrorDecoder {
                         errorResponse.getCode(),
                         errorResponse.getMessage(),
                         null,
-                        new RuntimeException(StringUtils.isNotBlank(errorResponse.getException()) ? errorResponse.getException() : "feign client execute error,reasons unknown!"));
+                        new RuntimeException(StringUtils.isNotBlank(errorResponse.getException()) ? errorResponse.getException() : "no exception message!"));
             } catch (IOException e) {
                 return new RuntimeException(e.getMessage());
             }
