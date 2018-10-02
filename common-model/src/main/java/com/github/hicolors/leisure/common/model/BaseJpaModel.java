@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.hicolors.leisure.common.model.validator.ValidatorGroup;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -20,7 +21,8 @@ import java.util.Date;
  */
 @MappedSuperclass
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@JsonIgnoreProperties({"hibernate_lazy_initializer", "handler"})
+@JsonIgnoreProperties({"hibernate_lazy_initializer", "handler", "delete_flag"})
+@Where(clause = "delete_flag = 0")
 public abstract class BaseJpaModel implements BaseModel {
 
     /**
@@ -70,6 +72,10 @@ public abstract class BaseJpaModel implements BaseModel {
     @Column(name = "modify_time")
     protected Date modifyTime;
 
+    @Null(message = "删除标志位 必须为空")
+    @Column(name = "delete_flag")
+    protected Boolean deleteFlag;
+
     @Override
     public Long getCreator() {
         return creator;
@@ -111,6 +117,15 @@ public abstract class BaseJpaModel implements BaseModel {
     @Override
     public BaseJpaModel setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+        return this;
+    }
+
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public BaseJpaModel setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
         return this;
     }
 }
