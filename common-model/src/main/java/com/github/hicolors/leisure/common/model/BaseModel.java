@@ -1,5 +1,7 @@
 package com.github.hicolors.leisure.common.model;
 
+import com.github.hicolors.leisure.common.utils.json.JsonResultFilterSupport;
+
 import java.util.Date;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Date;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2018/9/11
  */
-public interface BaseModel {
+public interface BaseModel extends JsonResultFilterSupport {
     /**
      * 创建人
      *

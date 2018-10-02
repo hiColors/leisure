@@ -1,9 +1,7 @@
-package com.github.hicolors.leisure.common.jpa.model;
+package com.github.hicolors.leisure.common.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.github.hicolors.leisure.common.model.BaseModel;
 import com.github.hicolors.leisure.common.model.validator.ValidatorGroup;
-import com.github.hicolors.leisure.common.utils.json.JsonResultFilterSupport;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,7 +21,7 @@ import java.util.Date;
 @MappedSuperclass
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties({"hibernate_lazy_initializer", "handler"})
-public abstract class BaseJpaModel implements BaseModel, JsonResultFilterSupport {
+public abstract class BaseJpaModel implements BaseModel {
 
     /**
      * 创建人

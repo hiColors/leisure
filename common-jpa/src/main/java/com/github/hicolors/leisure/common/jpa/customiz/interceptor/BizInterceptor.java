@@ -1,6 +1,6 @@
 package com.github.hicolors.leisure.common.jpa.customiz.interceptor;
 
-import com.github.hicolors.leisure.common.jpa.model.BaseJpaModel;
+import com.github.hicolors.leisure.common.model.BaseJpaModel;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
 

@@ -1,6 +1,6 @@
 package com.github.hicolors.leisure.common.example.a.bean;
 
-import com.github.hicolors.leisure.common.jpa.model.BaseJpaModel;
+import com.github.hicolors.leisure.common.model.BaseJpaModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
