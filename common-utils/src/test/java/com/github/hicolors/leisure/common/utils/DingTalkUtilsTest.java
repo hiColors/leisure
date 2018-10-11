@@ -10,7 +10,7 @@ public class DingTalkUtilsTest {
     @Test
     public void send() {
         DingTalkUtils.send(
-                "https://oapi.dingtalk.com/robot/send?access_token=8b9e2b314f6363cca32e9a1d325a561d2a8a0079e689b2a40db33967f121cab4",
+                "https://oapi.dingtalk.com/robot/send?access_token=099551a192492077a922a5d1aa7e1a060b0fd18890f021c0e4298013d4dcb5c2",
                 new Warning("测试标题",
                         UUID.randomUUID().toString().replace("-", ""),
                         "测试环节",
