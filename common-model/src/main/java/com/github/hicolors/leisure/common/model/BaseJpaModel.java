@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.hicolors.leisure.common.model.validator.ValidatorGroup;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -22,7 +21,6 @@ import java.util.Date;
 @MappedSuperclass
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties({"hibernate_lazy_initializer", "handler", "delete_flag"})
-@Where(clause = "delete_flag = 0")
 public abstract class BaseJpaModel implements BaseModel {
 
     /**
@@ -120,10 +118,12 @@ public abstract class BaseJpaModel implements BaseModel {
         return this;
     }
 
+    @Override
     public Boolean getDeleteFlag() {
         return deleteFlag;
     }
 
+    @Override
     public BaseJpaModel setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
         return this;

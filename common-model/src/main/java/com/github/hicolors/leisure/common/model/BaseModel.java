@@ -70,4 +70,19 @@ public interface BaseModel extends JsonResultFilterSupport {
      * @return
      */
     BaseModel setModifyTime(Date modifyTime);
+
+    /**
+     * 删除标志位
+     *
+     * @return
+     */
+    Boolean getDeleteFlag();
+
+    /**
+     * 删除标志位
+     *
+     * @param deleteFlag
+     * @return
+     */
+    BaseModel setDeleteFlag(Boolean deleteFlag);
 }
