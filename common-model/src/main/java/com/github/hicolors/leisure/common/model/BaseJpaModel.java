@@ -70,7 +70,13 @@ public abstract class BaseJpaModel implements BaseModel {
     @Column(name = "modify_time")
     protected Date modifyTime;
 
-    @Null(message = "删除标志位 必须为空")
+    @Null(message = "删除标志位 必须为空", groups = {
+            ValidatorGroup.Get.class,
+            ValidatorGroup.Post.class,
+            ValidatorGroup.Put.class,
+            ValidatorGroup.Patch.class,
+            ValidatorGroup.Delete.class
+    })
     @Column(name = "delete_flag")
     protected Boolean deleteFlag;
 

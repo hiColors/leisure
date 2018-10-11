@@ -68,8 +68,11 @@ public class BizInterceptor extends EmptyInterceptor {
                 } else if ("modifyTime".equals(propertyNames[i])) {
                     state[i] = now;
                     count++;
+                } else if ("deleteFlag".equals(propertyNames[i])) {
+                    state[i] = false;
+                    count++;
                 }
-                if (count >= 4) {
+                if (count >= 5) {
                     return true;
                 }
             }
