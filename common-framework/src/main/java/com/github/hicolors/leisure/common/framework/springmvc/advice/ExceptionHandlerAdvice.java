@@ -17,6 +17,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -93,7 +94,16 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
                     errorResponse.addError(fieldError.getField(), fieldError.getDefaultMessage());
                 }
                 errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-            } else if (exception instanceof NoHandlerFoundException) {
+            } else if (exception instanceof MethodArgumentNotValidException) {
+                errorResponse.setCode(PARAM_VALIDATED_UN_PASS);
+                errorResponse.setMessage("输入的数据不合法,详情见 errors 字段");
+                for (FieldError fieldError : ((MethodArgumentNotValidException) exception).getBindingResult().getFieldErrors()) {
+                    errorResponse.addError(fieldError.getField(), fieldError.getDefaultMessage());
+                }
+                errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+                errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+            }
+            else if (exception instanceof NoHandlerFoundException) {
                 errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
             } else if (exception instanceof HttpRequestMethodNotSupportedException) {
                 errorResponse.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
