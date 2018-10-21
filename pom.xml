@@ -28,7 +28,7 @@
         <leisure.version>1.0.0-SNAPSHOT</leisure.version>
 
         <!-- spring -->
-        <spring-platform.version>Cairo-SR4</spring-platform.version>
+        <spring-platform.version>Cairo-SR5</spring-platform.version>
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
 
         <!-- 第三方 spring boot starter -->
@@ -38,9 +38,8 @@
 
 
         <!-- swagger -->
-        <springfox-swagger2.version>2.7.0</springfox-swagger2.version>
-        <springfox-swagger2-annotation.version>1.5.13</springfox-swagger2-annotation.version>
-
+        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+        <springfox-swagger2-annotation.version>1.5.21</springfox-swagger2-annotation.version>
 
         <!-- mysql connector -->
         <mysql-connector.version>5.1.47</mysql-connector.version>
