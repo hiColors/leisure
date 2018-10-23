@@ -4,7 +4,9 @@ import com.github.hicolors.leisure.common.framework.springmvc.advice.enhance.eve
 import com.github.hicolors.leisure.common.utils.DingTalkUtils;
 import com.github.hicolors.leisure.common.utils.Warning;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,11 +19,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class DingtalkHandler implements ErrorSourceHandler {
 
-    private static final String DEFAULT_DINGTALK_VALUE = "none";
     /**
      * 服务中 配置的钉钉告警地址
      */
-    @Value("${warning.dingtalk:none}")
+    @Value("${warning.dingtalk:}")
     private String webhook;
 
     @Override
@@ -31,10 +32,9 @@ public class DingtalkHandler implements ErrorSourceHandler {
     }
 
     @Override
-    public void dispose(ErrorSource t) {
-        if (DEFAULT_DINGTALK_VALUE.equals(webhook)) {
-            log.info("服务中未配置钉钉预警机器人地址");
-        } else {
+    @Async
+    public void dispose(ErrorSource t)  {
+        if(StringUtils.isNotBlank(webhook)){
             Warning warning = (Warning) t.getData();
             DingTalkUtils.send(webhook, warning);
         }

@@ -23,7 +23,7 @@ import java.util.Map;
 @Slf4j
 public class DingTalkUtils {
 
-    private static final String ENV = System.getProperty("env");
+    private static final String ENV = System.getProperty("spring.profiles.active");
 
     private static final HttpClient HTTP_CLIENT = HttpClients.createDefault();
 
