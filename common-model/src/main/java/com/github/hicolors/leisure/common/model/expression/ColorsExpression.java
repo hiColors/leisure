@@ -63,24 +63,6 @@ public class ColorsExpression {
     public ColorsExpression() {
     }
 
-    private void initialize(String filterName) {
-        this.setFilterName(filterName);
-        String matchTypeStr = StringUtils.substringBefore(filterName, "_");
-        MatchType matchType = MatchType.get(matchTypeStr);
-        if (Objects.isNull(matchType)) {
-            throw new ExpressionException(String.format("filter 名称 %s 没有按规则编写,无法得到属性比较类型。", filterName));
-        }
-        this.setMatchType(matchType);
-        this.setPropertyType(String.class);
-        String propertyNameStr = StringUtils.substringAfter(filterName, "_");
-        String[] propertyNames = propertyNameStr.split(OR_SEPARATOR);
-        if (propertyNames.length <= 0) {
-            throw new ExpressionException(String.format("filter 名称 %s 没有按规则编写,无法得到属性比较类型。", filterName));
-        }
-        this.setPropertyNames(propertyNames);
-    }
-
-
     public ColorsExpression(String filterName, String[] filterValues) {
         initialize(filterName);
         this.setFilterValues(filterValues);
@@ -100,6 +82,22 @@ public class ColorsExpression {
         }
     }
 
+    private void initialize(String filterName) {
+        this.setFilterName(filterName);
+        String matchTypeStr = StringUtils.substringBefore(filterName, "_");
+        MatchType matchType = MatchType.get(matchTypeStr);
+        if (Objects.isNull(matchType)) {
+            throw new ExpressionException(String.format("filter 名称 %s 没有按规则编写,无法得到属性比较类型。", filterName));
+        }
+        this.setMatchType(matchType);
+        this.setPropertyType(String.class);
+        String propertyNameStr = StringUtils.substringAfter(filterName, "_");
+        String[] propertyNames = propertyNameStr.split(OR_SEPARATOR);
+        if (propertyNames.length <= 0) {
+            throw new ExpressionException(String.format("filter 名称 %s 没有按规则编写,无法得到属性比较类型。", filterName));
+        }
+        this.setPropertyNames(propertyNames);
+    }
 
     public void withoutArg() {
         MatchType matchType = this.getMatchType();

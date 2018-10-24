@@ -33,8 +33,8 @@ public class DingtalkHandler implements ErrorSourceHandler {
 
     @Override
     @Async
-    public void dispose(ErrorSource t)  {
-        if(StringUtils.isNotBlank(webhook)){
+    public void dispose(ErrorSource t) {
+        if (StringUtils.isNotBlank(webhook)) {
             Warning warning = (Warning) t.getData();
             DingTalkUtils.send(webhook, warning);
         }

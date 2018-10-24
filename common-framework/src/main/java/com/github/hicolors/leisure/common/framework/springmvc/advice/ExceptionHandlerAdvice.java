@@ -67,7 +67,6 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
         //拼装返回结果
         ErrorResponse errorResponse = new ErrorResponse(new Date(), uri);
 
-
         if (exception instanceof ExtensionException) {
             log.warn(MessageFormat.format("当前程序进入到异常捕获器，出错的 url 为：[ {0} ]，出错的参数为：[ {1} ]", url, JsonUtils.serialize(paramMap)), exception);
             ExtensionException expectException = (ExtensionException) exception;
@@ -101,9 +100,7 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
                     errorResponse.addError(fieldError.getField(), fieldError.getDefaultMessage());
                 }
                 errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-                errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-            }
-            else if (exception instanceof NoHandlerFoundException) {
+            } else if (exception instanceof NoHandlerFoundException) {
                 errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
             } else if (exception instanceof HttpRequestMethodNotSupportedException) {
                 errorResponse.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());

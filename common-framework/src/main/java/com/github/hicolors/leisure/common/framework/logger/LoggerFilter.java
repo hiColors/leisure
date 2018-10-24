@@ -10,9 +10,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.sleuth.instrument.web.TraceWebFilter;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
@@ -38,21 +41,22 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2018/8/19
  */
 @Order(LoggerFilter.ORDER)
+@Component
 public class LoggerFilter extends OncePerRequestFilter {
 
-    public static final int ORDER = TraceWebFilter.ORDER + 7;
+    static final int ORDER = TraceWebFilter.ORDER + 7;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerFilter.class);
+
     private final UrlPathHelper urlPathHelper = new UrlPathHelper();
-    private final List<String> excludePatterns;
+
+    @Value("#{'${access.logger.exclude.uris:/favicon.ico;/swagger**/**;/health/**;/webjars/**}'.split(',')}")
+    private List<String> excludePatterns;
 
     @Autowired
     private Tracer tracer;
 
     private PathMatcher pathMatcher = new AntPathMatcher();
-
-    public LoggerFilter(List<String> excludePatterns) {
-        this.excludePatterns = excludePatterns;
-    }
 
     private static StringBuilder generateResultLogger(Map<String, Map<String, String>> logMap) {
         StringBuilder resultStr = new StringBuilder();
@@ -138,7 +142,7 @@ public class LoggerFilter extends OncePerRequestFilter {
                     requestMap.put(LoggerConst.REQUEST_KEY_URL, request.getRequestURL().toString());
                     requestMap.put(LoggerConst.REQUEST_KEY_HTTP_METHOD, request.getMethod());
                     requestMap.put(LoggerConst.REQUEST_KEY_BODY_PARAM, StringUtils.isNotBlank(bodyParam) ? org.springframework.util.StringUtils.trimAllWhitespace(bodyParam) : LoggerConst.VALUE_DEFAULT);
-                    requestMap.put(LoggerConst.REQUEST_KEY_EXTRA_PARAM, JsonUtils.serialize(extraParamMap));
+                    requestMap.put(LoggerConst.REQUEST_KEY_EXTRA_PARAM, CollectionUtils.isEmpty(extraParamMap) ? LoggerConst.VALUE_DEFAULT : JsonUtils.serialize(extraParamMap));
                     requestMap.put(LoggerConst.REQUEST_KEY_HEADER, JsonUtils.serialize(headers));
 
                     Date responseDate = new Date();

@@ -1,7 +1,5 @@
 package com.github.hicolors.leisure.common.utils;
 
-import lombok.Data;
-
 public class AModel {
     private Long id;
 

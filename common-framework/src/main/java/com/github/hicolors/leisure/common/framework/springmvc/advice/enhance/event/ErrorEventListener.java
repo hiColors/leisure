@@ -7,7 +7,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * ErrorEventLis
@@ -28,12 +27,10 @@ public class ErrorEventListener implements ApplicationListener<ErrorEvent> {
     @Async
     @Override
     public void onApplicationEvent(ErrorEvent errorEvent) {
-        if (Objects.nonNull(errorEvent)) {
-            if (errorEvent.getSource() instanceof ErrorSource) {
-                for (ErrorSourceHandler handler : handlers) {
-                    if (handler.support((ErrorSource) errorEvent.getSource())) {
-                        handler.dispose((ErrorSource) errorEvent.getSource());
-                    }
+        if (errorEvent.getSource() instanceof ErrorSource) {
+            for (ErrorSourceHandler handler : handlers) {
+                if (handler.support((ErrorSource) errorEvent.getSource())) {
+                    handler.dispose((ErrorSource) errorEvent.getSource());
                 }
             }
         }
