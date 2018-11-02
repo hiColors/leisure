@@ -137,24 +137,24 @@ public final class ReflectionUtils {
         return null;
     }
 
-//    @SuppressWarnings("unchecked")
-//    public static <T> Class<T> getSuperClassGenricType(Class clazz) {
-//        return (Class<T>) getSuperClassGenricType(clazz, 0);
-//    }
-//
-//    public static Class getInterfaceGenricType(Class clazz, Class interfaceClazz) {
-//        return getInterfaceGenricType(clazz, interfaceClazz, 0);
-//    }
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T> getSuperClassGenricType(Class clazz) {
+        return (Class<T>) getSuperClassGenricType(clazz, 0);
+    }
 
-//    @SuppressWarnings("unchecked")
-//    public static <T> Class<T> getInterfaceGenricType(Class clazz, Class interfaceClazz, int index) {
-//        return ClassUtils.getInterfaceGenricType(clazz, interfaceClazz, index);
-//    }
-//
-//    @SuppressWarnings("unchecked")
-//    public static <T> Class<T> getSuperClassGenricType(Class clazz, int index) {
-//        return ClassUtils.getSuperClassGenricType(clazz, index);
-//    }
+    public static Class getInterfaceGenricType(Class clazz, Class interfaceClazz) {
+        return getInterfaceGenricType(clazz, interfaceClazz, 0);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T> getInterfaceGenricType(Class clazz, Class interfaceClazz, int index) {
+        return ClassUtils.getInterfaceGenricType(clazz, interfaceClazz, index);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T> getSuperClassGenricType(Class clazz, int index) {
+        return ClassUtils.getSuperClassGenricType(clazz, index);
+    }
 
     public static List<Object> convertElementPropertyToList(Collection<Object> collection, String propertyName) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         List<Object> list = new ArrayList<Object>();

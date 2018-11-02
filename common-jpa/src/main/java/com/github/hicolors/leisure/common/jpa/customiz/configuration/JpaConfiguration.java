@@ -28,7 +28,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         repositoryBaseClass = ColorsComplexRepository.class
 )
 public class JpaConfiguration {
-
     @Bean
     public Interceptor bizInterceptor() {
         return new BizInterceptor();

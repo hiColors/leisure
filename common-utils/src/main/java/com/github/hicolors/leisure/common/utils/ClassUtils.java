@@ -1,9 +1,7 @@
 package com.github.hicolors.leisure.common.utils;
 
-import com.github.hicolors.leisure.common.utils.reflect.ClassFactory;
-import com.github.hicolors.leisure.common.utils.reflect.ColorsClassFactory;
-import com.github.hicolors.leisure.common.utils.reflect.MethodProxy;
-import com.github.hicolors.leisure.common.utils.reflect.ObjectProperty;
+import com.github.hicolors.leisure.common.utils.reflect.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -510,5 +508,17 @@ public class ClassUtils {
         }
         return clazz;
     }
+
+
+    public static <T> Class<T> forName(String className) {
+        try {
+            return StringUtils.isNotBlank(className) ? (Class<T>) Class.forName(className,false, ColorsClassLoader.getClassLoader()) : null;
+        } catch (ClassNotFoundException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+
 
 }
