@@ -14,7 +14,7 @@ import javax.persistence.EntityManagerFactory;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2018/11/2
  */
-public class AbstractListener {
+public abstract class AbstractListener {
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;

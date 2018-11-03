@@ -58,6 +58,9 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
     @ExceptionHandler(value = Exception.class)
     public ErrorResponse errorAttributes(Exception exception, HttpServletRequest request, HttpServletResponse response) {
 
+        // 异常错误返回时 添加 trace_id 到 response header 中
+        response.setHeader("trace_id",tracer.currentSpan().context().traceIdString());
+
         //特定异常处理所需要的参数
         Object data;
         Map paramMap = getParam(request);
