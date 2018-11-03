@@ -11,8 +11,11 @@ import com.github.hicolors.leisure.common.utils.ByteArrayUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -23,11 +26,13 @@ import java.util.Properties;
  * @date 2018/8/6
  */
 @Slf4j
-public class RocketMqConsumerHolder {
+public class RocketMqConsumerHolder implements ApplicationListener<ContextRefreshedEvent> {
 
     private List<ConsumeFailEnhance> enhances;
 
     private List<RocketMqConsumer> consumerHandlers;
+
+    private List<Consumer> consumers = new ArrayList<>();
 
     public RocketMqConsumerHolder(RocketMqProperties aliyunOnsProperties,
                                   List<RocketMqConsumer> consumerHandlers,
@@ -46,7 +51,6 @@ public class RocketMqConsumerHolder {
                 properties.put(PropertyKeyConst.ConsumerId, consumerHandler.getConsumerId());
                 properties.put(PropertyKeyConst.ConsumeThreadNums, consumerHandler.getThreadNums());
                 Consumer consumer = ONSFactory.createConsumer(properties);
-                consumer.start();
                 consumer.subscribe(consumerHandler.getTopic(), consumerHandler.getTag(), (message, context) -> {
                     try {
                         consumerHandler.handle(message, context);
@@ -65,6 +69,7 @@ public class RocketMqConsumerHolder {
                         return Action.ReconsumeLater;
                     }
                 });
+                consumers.add(consumer);
             }
         }
 
@@ -86,5 +91,17 @@ public class RocketMqConsumerHolder {
     public RocketMqConsumerHolder setConsumerHandlers(List<RocketMqConsumer> consumerHandlers) {
         this.consumerHandlers = consumerHandlers;
         return this;
+    }
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        log.info("RocketMqConsumerHolder onApplicationEvent : {}", event.getApplicationContext().getId());
+        long startTime = System.currentTimeMillis();
+        if (CollectionUtils.isNotEmpty(consumers)) {
+            log.info("aliyun ons consumer 正在装载！");
+            consumers.forEach(Consumer::start);
+            log.info("aliyun ons consumer 启动耗时[{}]", System.currentTimeMillis() - startTime);
+        }
+
     }
 }

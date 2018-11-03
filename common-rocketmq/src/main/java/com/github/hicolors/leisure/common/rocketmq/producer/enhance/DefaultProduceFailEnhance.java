@@ -6,7 +6,10 @@ import com.github.hicolors.leisure.common.utils.ByteArrayUtils;
 import com.github.hicolors.leisure.common.utils.DingTalkUtils;
 import com.github.hicolors.leisure.common.utils.Warning;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,16 @@ import java.util.Map;
 public class DefaultProduceFailEnhance implements ProduceFailEnhance {
 
     private RocketMqProperties properties;
+
+    @Autowired
+    private Environment env;
+
+    @Value("${env.property.name:spring.profiles.active}")
+    private String envProperty;
+
+    public String getEnv() {
+        return env.getProperty(envProperty);
+    }
 
     public DefaultProduceFailEnhance(RocketMqProperties properties) {
         this.properties = properties;
@@ -47,6 +60,7 @@ public class DefaultProduceFailEnhance implements ProduceFailEnhance {
         map.put("producerId", producerId);
 
         DingTalkUtils.send(properties.getDingtalk(), new Warning(
+                getEnv(),
                 "MQ 发送失败预警",
                 message.getMsgID(),
                 "发送消息",

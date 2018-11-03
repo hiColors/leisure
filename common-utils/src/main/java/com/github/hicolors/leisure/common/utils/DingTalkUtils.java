@@ -8,6 +8,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.core.env.Environment;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -22,8 +23,6 @@ import java.util.Map;
  */
 @Slf4j
 public class DingTalkUtils {
-
-    private static final String ENV = System.getProperty("spring_profiles_active");
 
     private static final HttpClient HTTP_CLIENT = HttpClients.createDefault();
 
@@ -77,7 +76,7 @@ public class DingTalkUtils {
     private static String buildStandardTemplate(Warning warning) {
         return MessageFormat.format(STANDARD_TEMPLATE,
                 warning.getTitle(),
-                ENV,
+                warning.getEnv(),
                 warning.getTraceId(),
                 warning.getBusiness(),
                 warning.getMethodName(),

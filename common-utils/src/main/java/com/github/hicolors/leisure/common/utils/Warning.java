@@ -17,6 +17,11 @@ import java.util.Map;
 public class Warning {
 
     /**
+     * 环境
+     */
+    private String env;
+
+    /**
      * 标题
      */
     private String title;

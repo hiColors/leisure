@@ -4,6 +4,7 @@ import brave.Tracer;
 import com.github.hicolors.leisure.common.exception.ExtensionException;
 import com.github.hicolors.leisure.common.framework.logger.LoggerConst;
 import com.github.hicolors.leisure.common.framework.springmvc.advice.enhance.event.ErrorEvent;
+import com.github.hicolors.leisure.common.framework.utils.EnvHelper;
 import com.github.hicolors.leisure.common.model.response.ErrorResponse;
 import com.github.hicolors.leisure.common.utils.JsonUtils;
 import com.github.hicolors.leisure.common.utils.Warning;
@@ -47,8 +48,12 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
     private static final long PARAM_VALIDATED_UN_PASS = 66666666L;
 
     private ApplicationEventPublisher publisher;
+
     @Autowired
     private Tracer tracer;
+
+    @Autowired
+    private EnvHelper envHelper;
 
     @Override
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
@@ -59,7 +64,7 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
     public ErrorResponse errorAttributes(Exception exception, HttpServletRequest request, HttpServletResponse response) {
 
         // 异常错误返回时 添加 trace_id 到 response header 中
-        response.setHeader("trace_id",tracer.currentSpan().context().traceIdString());
+        response.setHeader("trace-id", tracer.currentSpan().context().traceIdString());
 
         //特定异常处理所需要的参数
         Object data;
@@ -110,7 +115,8 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
             } else if (exception instanceof HttpMediaTypeNotSupportedException) {
                 errorResponse.setStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
             }
-            data = new Warning("服务发生非预期异常",
+            data = new Warning(envHelper.getEnv(),
+                    "服务发生非预期异常",
                     tracer.currentSpan().context().traceIdString(),
                     uri,
                     request.getMethod(),

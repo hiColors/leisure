@@ -1,5 +1,7 @@
 package com.github.hicolors.leisure.common.framework.configuration;
 
+import com.github.hicolors.leisure.common.framework.utils.SpringContextUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,4 +14,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = {"com.github.hicolors.leisure.common.framework"})
 public class CommonFrameworkAutoConfigration {
+
+    @Bean
+    public SpringContextUtils springContextUtils() {
+        return new SpringContextUtils();
+    }
+
+
 }

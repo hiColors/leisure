@@ -7,7 +7,9 @@ import com.github.hicolors.leisure.common.utils.DingTalkUtils;
 import com.github.hicolors.leisure.common.utils.Warning;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,16 @@ public class DefaultConsumeFailEnhance implements ConsumeFailEnhance {
     @Autowired
     private RocketMqProperties properties;
 
+    @Autowired
+    private Environment env;
+
+    @Value("${env.property.name:spring.profiles.active}")
+    private String envProperty;
+
+    public String getEnv() {
+        return env.getProperty(envProperty);
+    }
+
     @Override
     public boolean support(String consumerId, Message msg) {
         return true;
@@ -48,7 +60,7 @@ public class DefaultConsumeFailEnhance implements ConsumeFailEnhance {
         map.put("consumerId", consumerId);
 
         DingTalkUtils.send(properties.getDingtalk(),
-                new Warning(
+                new Warning(getEnv(),
                         "MQ 消费失败预警",
                         message.getMsgID(),
                         "消费消息",

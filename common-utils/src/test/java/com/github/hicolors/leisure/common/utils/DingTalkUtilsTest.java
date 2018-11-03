@@ -11,7 +11,8 @@ public class DingTalkUtilsTest {
     public void send() {
         DingTalkUtils.send(
                 "https://oapi.dingtalk.com/robot/send?access_token=099551a192492077a922a5d1aa7e1a060b0fd18890f021c0e4298013d4dcb5c2",
-                new Warning("测试标题",
+                new Warning("test",
+                        "测试标题",
                         UUID.randomUUID().toString().replace("-", ""),
                         "测试环节",
                         "测试方法",
