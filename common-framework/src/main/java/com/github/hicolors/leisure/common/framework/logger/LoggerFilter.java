@@ -50,7 +50,7 @@ public class LoggerFilter extends OncePerRequestFilter {
 
     private final UrlPathHelper urlPathHelper = new UrlPathHelper();
 
-    @Value("#{'${access.logger.exclude.uris:/favicon.ico;/swagger**/**;/health/**;/webjars/**}'.split(',')}")
+    @Value("#{'${access.logger.exclude.uris:/favicon.ico,/swagger**/**,/health/**,/webjars/**}'.split(',')}")
     private List<String> excludePatterns;
 
     @Autowired
