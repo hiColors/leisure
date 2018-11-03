@@ -1,5 +1,6 @@
 package com.github.hicolors.leisure.common.framework.configuration;
 
+import com.github.hicolors.leisure.common.framework.utils.EnvHelper;
 import com.github.hicolors.leisure.common.framework.utils.SpringContextUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,5 +21,9 @@ public class CommonFrameworkAutoConfigration {
         return new SpringContextUtils();
     }
 
+    @Bean
+    public EnvHelper envHelper() {
+        return new EnvHelper();
+    }
 
 }
