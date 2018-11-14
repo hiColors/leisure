@@ -26,6 +26,8 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Date;
@@ -106,6 +108,13 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
                 errorResponse.setMessage("输入的数据不合法,详情见 errors 字段");
                 for (FieldError fieldError : ((MethodArgumentNotValidException) exception).getBindingResult().getFieldErrors()) {
                     errorResponse.addError(fieldError.getField(), fieldError.getDefaultMessage());
+                }
+                errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+            } else if(exception instanceof ConstraintViolationException){
+                errorResponse.setCode(PARAM_VALIDATED_UN_PASS);
+                errorResponse.setMessage("输入的数据不合法,详情见 errors 字段");
+                for (ConstraintViolation cv :((ConstraintViolationException) exception).getConstraintViolations()) {
+                    errorResponse.addError(cv.getPropertyPath().toString(), cv.getMessage());
                 }
                 errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
             } else if (exception instanceof NoHandlerFoundException) {
