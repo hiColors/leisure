@@ -11,6 +11,7 @@ import com.github.hicolors.leisure.common.utils.Warning;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,10 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
 
     @Autowired
     private EnvHelper envHelper;
+    @Value("${spring.application.name}")
+    private String projectName;
+    @Value("${aliyun.sls.project}")
+    private String slsProject;
 
     @Override
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
@@ -132,7 +137,7 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
                     JsonUtils.serialize(paramMap),
                     null,
                     new Date(),
-                    exception.getMessage());
+                    exceptionMsg(exception));
         }
         response.setStatus(errorResponse.getStatus());
         publisher.publishEvent(new ErrorEvent(errorResponse, data));
@@ -159,4 +164,23 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
         return params;
     }
 
+    protected String exceptionMsg(Exception exception) {
+        if (StringUtils.isBlank(slsProject) || StringUtils.isBlank(projectName)) {
+            return exception.getMessage();
+        }
+        String traceId = tracer.currentSpan().context().traceIdString();
+        StringBuilder url = new StringBuilder();
+        url.append("https://sls.console.aliyun.com/next/project/")
+                .append(slsProject)
+                .append("/logsearch/")
+                .append(projectName)
+                .append("?queryString=%s")
+                .append("&queryTimeType=99")
+                .append("&startTime=%d")
+                .append("&endTime=%d");
+        long startTime = new Date().toInstant().minusSeconds(10 * 60).getEpochSecond();
+        long endTime = new Date().toInstant().plusSeconds(5 * 60).getEpochSecond();
+        String logUrl = String.format(url.toString(), traceId, startTime, endTime);
+        return exception.getMessage() + "\r\n" + "[查看阿里云日志](" + logUrl + ")";
+    }
 }
