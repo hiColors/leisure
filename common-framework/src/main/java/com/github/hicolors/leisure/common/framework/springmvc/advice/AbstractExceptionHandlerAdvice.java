@@ -21,7 +21,6 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
@@ -43,9 +42,8 @@ import java.util.Objects;
  * @date 2018/7/5
  */
 
-@RestControllerAdvice
 @Slf4j
-public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
+public abstract class AbstractExceptionHandlerAdvice implements ApplicationEventPublisherAware {
 
     private static final long UNEXPECT_EXCEPTION_CODE = 88888888L;
     private static final long PARAM_VALIDATED_UN_PASS = 66666666L;
