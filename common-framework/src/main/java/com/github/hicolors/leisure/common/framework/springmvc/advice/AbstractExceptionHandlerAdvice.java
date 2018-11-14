@@ -59,8 +59,8 @@ public abstract class AbstractExceptionHandlerAdvice implements ApplicationEvent
     @Value("${aliyun.sls.projectName:}")
     private String projectName;
 
-    @Value("${aliyun.sls.logFileName:}")
-    private String logFileName;
+    @Value("${aliyun.sls.logstoreName:}")
+    private String logstoreName;
 
     @Override
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
@@ -165,7 +165,7 @@ public abstract class AbstractExceptionHandlerAdvice implements ApplicationEvent
     }
 
     protected String exceptionMsg(Exception exception) {
-        if (StringUtils.isBlank(projectName) || StringUtils.isBlank(logFileName)) {
+        if (StringUtils.isBlank(projectName) || StringUtils.isBlank(logstoreName)) {
             return exception.getMessage();
         }
         String traceId = tracer.currentSpan().context().traceIdString();
@@ -173,7 +173,7 @@ public abstract class AbstractExceptionHandlerAdvice implements ApplicationEvent
         url.append("https://sls.console.aliyun.com/next/project/")
                 .append(projectName)
                 .append("/logsearch/")
-                .append(logFileName)
+                .append(logstoreName)
                 .append("?queryString=%s")
                 .append("&queryTimeType=99")
                 .append("&startTime=%d")
