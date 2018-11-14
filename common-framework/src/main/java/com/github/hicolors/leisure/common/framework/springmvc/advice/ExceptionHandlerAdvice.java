@@ -57,10 +57,12 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
 
     @Autowired
     private EnvHelper envHelper;
-    @Value("${spring.application.name}")
+
+    @Value("${aliyun.sls.projectName:}")
     private String projectName;
-    @Value("${aliyun.sls.project}")
-    private String slsProject;
+
+    @Value("${aliyun.sls.logFileName:}")
+    private String logFileName;
 
     @Override
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
@@ -115,10 +117,10 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
                     errorResponse.addError(fieldError.getField(), fieldError.getDefaultMessage());
                 }
                 errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-            } else if(exception instanceof ConstraintViolationException){
+            } else if (exception instanceof ConstraintViolationException) {
                 errorResponse.setCode(PARAM_VALIDATED_UN_PASS);
                 errorResponse.setMessage("输入的数据不合法,详情见 errors 字段");
-                for (ConstraintViolation cv :((ConstraintViolationException) exception).getConstraintViolations()) {
+                for (ConstraintViolation cv : ((ConstraintViolationException) exception).getConstraintViolations()) {
                     errorResponse.addError(cv.getPropertyPath().toString(), cv.getMessage());
                 }
                 errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -165,15 +167,15 @@ public class ExceptionHandlerAdvice implements ApplicationEventPublisherAware {
     }
 
     protected String exceptionMsg(Exception exception) {
-        if (StringUtils.isBlank(slsProject) || StringUtils.isBlank(projectName)) {
+        if (StringUtils.isBlank(projectName) || StringUtils.isBlank(logFileName)) {
             return exception.getMessage();
         }
         String traceId = tracer.currentSpan().context().traceIdString();
         StringBuilder url = new StringBuilder();
         url.append("https://sls.console.aliyun.com/next/project/")
-                .append(slsProject)
-                .append("/logsearch/")
                 .append(projectName)
+                .append("/logsearch/")
+                .append(logFileName)
                 .append("?queryString=%s")
                 .append("&queryTimeType=99")
                 .append("&startTime=%d")
