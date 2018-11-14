@@ -181,6 +181,6 @@ public abstract class AbstractExceptionHandlerAdvice implements ApplicationEvent
         long startTime = new Date().toInstant().minusSeconds(10 * 60).getEpochSecond();
         long endTime = new Date().toInstant().plusSeconds(5 * 60).getEpochSecond();
         String logUrl = String.format(url.toString(), traceId, startTime, endTime);
-        return exception.getMessage() + "\r\n" + "[查看阿里云日志](" + logUrl + ")";
+        return exception.getMessage() + "\r\n" + "[ 更多详情请点击查看阿里云日志 ](" + logUrl + ")";
     }
 }
