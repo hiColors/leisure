@@ -16,7 +16,7 @@
         <module>common-framework</module>
         <module>common-jpa</module>
         <module>common-rocketmq</module>
-        <module>common-fegin</module>
+        <module>common-feign</module>
 
     </modules>
 
@@ -115,7 +115,7 @@
 
             <dependency>
                 <groupId>com.github.hicolors</groupId>
-                <artifactId>common-fegin</artifactId>
+                <artifactId>common-feign</artifactId>
                 <version>${leisure.version}</version>
             </dependency>
 
