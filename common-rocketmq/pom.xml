@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>leisure</artifactId>
-        <groupId>com.github.hicolors</groupId>
+        <groupId>com.github.life.lab</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -12,6 +12,12 @@
     <artifactId>common-rocketmq</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.github.life.lab</groupId>
+            <artifactId>common-utils</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.aliyun.openservices</groupId>
             <artifactId>ons-client</artifactId>
@@ -27,11 +33,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.hicolors</groupId>
-            <artifactId>common-utils</artifactId>
         </dependency>
 
     </dependencies>

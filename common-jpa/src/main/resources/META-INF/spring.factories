@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.hicolors.leisure.common.jpa.configuration.CommonJpaAutoConfigration
+com.github.life.lab.leisure.common.jpa.configuration.CommonJpaAutoConfigration

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.hicolors</groupId>
+    <groupId>com.github.life.lab</groupId>
     <artifactId>leisure</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -85,37 +85,37 @@
             </dependency>
 
             <dependency>
-                <groupId>com.github.hicolors</groupId>
+                <groupId>com.github.life.lab</groupId>
                 <artifactId>common-model</artifactId>
                 <version>${leisure.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.github.hicolors</groupId>
+                <groupId>com.github.life.lab</groupId>
                 <artifactId>common-exception</artifactId>
                 <version>${leisure.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.github.hicolors</groupId>
+                <groupId>com.github.life.lab</groupId>
                 <artifactId>common-utils</artifactId>
                 <version>${leisure.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.github.hicolors</groupId>
+                <groupId>com.github.life.lab</groupId>
                 <artifactId>common-framework</artifactId>
                 <version>${leisure.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.github.hicolors</groupId>
+                <groupId>com.github.life.lab</groupId>
                 <artifactId>common-jpa</artifactId>
                 <version>${leisure.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.github.hicolors</groupId>
+                <groupId>com.github.life.lab</groupId>
                 <artifactId>common-feign</artifactId>
                 <version>${leisure.version}</version>
             </dependency>
@@ -240,22 +240,22 @@
 
         <pluginManagement>
 
-           <plugins>
+            <plugins>
 
-               <plugin>
-                   <groupId>org.springframework.boot</groupId>
-                   <artifactId>spring-boot-maven-plugin</artifactId>
-                   <version>${spring-boot.version}</version>
-                   <executions>
-                       <execution>
-                           <goals>
-                               <goal>repackage</goal>
-                           </goals>
-                       </execution>
-                   </executions>
-               </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
 
-           </plugins>
+            </plugins>
         </pluginManagement>
 
         <plugins>
