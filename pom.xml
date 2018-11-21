@@ -6,7 +6,7 @@
 
     <groupId>com.github.life-lab</groupId>
     <artifactId>leisure</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.1-RELEASE</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -20,12 +20,36 @@
 
     </modules>
 
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>life-lab</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>李伟超</name>
+            <email>liweichao0102@gmail.com</email>
+            <organization>com.github.life-lab</organization>
+            <url>https://github.com/life-lab/leisure</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:life-lab/leisure.git</connection>
+        <developerConnection>scm:git:git@github.com:life-lab/leisure.git</developerConnection>
+        <url>https://github.com/life-lab/leisure</url>
+        <tag>1.0</tag>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <leisure.version>1.0.0-SNAPSHOT</leisure.version>
+        <leisure.version>0.0.1-RELEASE</leisure.version>
 
         <!-- spring -->
         <spring-platform.version>Cairo-SR5</spring-platform.version>
@@ -284,5 +308,20 @@
 
     </build>
 
+    <distributionManagement>
+
+        <snapshotRepository>
+            <id>snapshotsoss</id>
+            <name>OSS Snapshots Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+
+        <repository>
+            <id>stagingoss</id>
+            <name>OSS Staging Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+
+    </distributionManagement>
 
 </project>
