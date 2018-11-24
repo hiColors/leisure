@@ -6,7 +6,7 @@
 
     <groupId>com.github.life-lab</groupId>
     <artifactId>leisure</artifactId>
-    <version>0.0.2-RELEASE</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -53,7 +53,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <leisure.version>0.0.2-RELEASE</leisure.version>
+        <leisure.version>0.0.3-SNAPSHOT</leisure.version>
 
         <!-- spring -->
         <spring-platform.version>Cairo-SR5</spring-platform.version>
@@ -183,6 +183,12 @@
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-annotations</artifactId>
                 <version>${springfox-swagger2-annotation.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-core</artifactId>
+                <version>${springfox-swagger2.version}</version>
             </dependency>
 
             <dependency>
