@@ -6,7 +6,7 @@
 
     <groupId>com.github.life-lab</groupId>
     <artifactId>leisure</artifactId>
-    <version>0.0.1-RELEASE</version>
+    <version>0.0.2-RELEASE</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -53,7 +53,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <leisure.version>0.0.1-RELEASE</leisure.version>
+        <leisure.version>0.0.2-RELEASE</leisure.version>
 
         <!-- spring -->
         <spring-platform.version>Cairo-SR5</spring-platform.version>
@@ -367,6 +367,11 @@
                         <goals>
                             <goal>sign</goal>
                         </goals>
+                        <configuration>
+                            <executable>gpg</executable>
+                            <keyname>${gpg.keyname}</keyname>
+                            <passphrase>${gpg.passphrase}</passphrase>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -378,13 +383,13 @@
     <distributionManagement>
 
         <snapshotRepository>
-            <id>snapshotsoss</id>
+            <id>maven-snapshots</id>
             <name>OSS Snapshots Repository</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
 
         <repository>
-            <id>stagingoss</id>
+            <id>maven-releases</id>
             <name>OSS Staging Repository</name>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
