@@ -1,0 +1,152 @@
+<configuration>
+
+    <property name="LOG_PATH"
+              value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}"/>
+
+    <!-- 全局统一 pattern -->
+    <property name="LOG_PATTERN"
+              value="%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39}: %msg%n"/>
+
+    <!-- 标准输出模式 console-->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 对日志进行格式化 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 输出模式 file,滚动记录文件，先将日志文件指定到文件，当符合某个条件时，将日志记录到其他文件 -->
+    <appender name="fileInfo" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--被写入的文件名，可以是相对目录，也可以是绝对目录，如果上级目录不存在会自动创建，没有默认值。-->
+        <file>${LOG_PATH}/info/info.log</file>
+        <!--滚动策略  基于时间的分包策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- yyyy-MM-dd 时间策略则为一天一个文件 -->
+            <FileNamePattern>${LOG_PATH}/info/info.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- 控制保留的归档文件的最大数量 -->
+            <MaxHistory>100</MaxHistory>
+        </rollingPolicy>
+        <!--  layout 负责把事件转换成字符串，格式化的日志信息的输出 -->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_PATTERN}</pattern>
+        </layout>
+        <!--级别过滤器，根据日志级别进行过滤。如果日志级别等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--设置过滤级别-->
+            <level>INFO</level>
+            <!--用于配置符合过滤条件的操作-->
+            <onMatch>ACCEPT</onMatch>
+            <!--用于配置不符合过滤条件的操作-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="fileWarn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/warn/warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/warn/warn.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <MaxHistory>100</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_PATTERN}</pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="fileError" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/error/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/error/error.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <MaxHistory>100</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_PATTERN}</pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="fileAccess" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/access/access.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/access/access.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>100</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_PATTERN}</pattern>
+        </layout>
+    </appender>
+
+    <appender name="asyncInfo" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 默认情况下，当BlockingQueue还有20%容量，
+        他将丢弃TRACE、DEBUG和INFO级别的event，只保留WARN和ERROR级别的event。
+        为了保持所有的events，设置该值为0。-->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>1024</queueSize>
+        <!--如果设置了neverBlock=true则写日志队列时候会调用ArrayBlockingQueue对的offer方法而不是put,而offer是非阻塞的-->
+        <neverBlock>true</neverBlock>
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref="fileInfo"/>
+    </appender>
+
+    <appender name="asyncWarn" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="fileWarn"/>
+    </appender>
+
+    <appender name="asyncError" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="fileError"/>
+    </appender>
+
+    <appender name="asyncAccess" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="fileAccess"/>
+    </appender>
+
+    <!-- request 日志
+        additivity: 是否向上级logger传递打印信息。默认是true。
+        同<logger>一样，可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个logger。
+    -->
+    <logger name="com.github.life.lab.leisure.common.framework.logger" level="info" additivity="false">
+        <appender-ref ref="asyncAccess"/>
+    </logger>
+
+    <logger name="springfox.documentation" level="OFF"/>
+
+    <springProfile name="dev">
+        <root>
+            <level value="INFO"/>
+            <appender-ref ref="stdout"/>
+            <appender-ref ref="asyncInfo"/>
+            <appender-ref ref="asyncWarn"/>
+            <appender-ref ref="asyncError"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test,prod">
+        <root>
+            <level value="INFO"/>
+            <appender-ref ref="asyncInfo"/>
+            <appender-ref ref="asyncWarn"/>
+            <appender-ref ref="asyncError"/>
+        </root>
+    </springProfile>
+
+</configuration>
