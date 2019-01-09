@@ -1,6 +1,6 @@
 package com.github.life.lab.leisure.common.jpa.customiz.interceptor;
 
-import com.github.life.lab.leisure.common.model.BaseJpaModel;
+import com.github.life.lab.leisure.common.jpa.customiz.model.BaseJpaModel;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
 

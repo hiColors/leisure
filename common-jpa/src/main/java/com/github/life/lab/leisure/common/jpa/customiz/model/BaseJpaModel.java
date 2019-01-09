@@ -1,6 +1,7 @@
-package com.github.life.lab.leisure.common.model;
+package com.github.life.lab.leisure.common.jpa.customiz.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.github.life.lab.leisure.common.model.BaseModel;
 import com.github.life.lab.leisure.common.model.validator.ValidatorGroup;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
