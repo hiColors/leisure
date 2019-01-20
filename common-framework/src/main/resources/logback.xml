@@ -86,6 +86,17 @@
         </layout>
     </appender>
 
+    <appender name="fileSQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/sql/sql.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/sql/sql.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>100</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_PATTERN}</pattern>
+        </layout>
+    </appender>
+
     <appender name="asyncInfo" class="ch.qos.logback.classic.AsyncAppender">
         <!-- 默认情况下，当BlockingQueue还有20%容量，
         他将丢弃TRACE、DEBUG和INFO级别的event，只保留WARN和ERROR级别的event。
@@ -120,12 +131,23 @@
         <appender-ref ref="fileAccess"/>
     </appender>
 
+    <appender name="asyncSQL" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="fileSQL"/>
+    </appender>
+
     <!-- request 日志
         additivity: 是否向上级logger传递打印信息。默认是true。
         同<logger>一样，可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个logger。
     -->
     <logger name="com.github.life.lab.leisure.common.framework.logger" level="info" additivity="false">
         <appender-ref ref="asyncAccess"/>
+    </logger>
+
+    <logger name="druid.sql.Statement" level="debug" additivity="false">
+        <appender-ref ref="asyncSQL"/>
     </logger>
 
     <logger name="springfox.documentation" level="OFF"/>
