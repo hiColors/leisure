@@ -6,7 +6,7 @@
 
     <groupId>com.github.life-lab</groupId>
     <artifactId>leisure</artifactId>
-    <version>0.0.6-RELEASE</version>
+    <version>0.0.7-RELEASE</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -17,6 +17,7 @@
         <module>common-jpa</module>
         <module>common-rocketmq</module>
         <module>common-feign</module>
+        <module>common-metrics</module>
 
     </modules>
 
@@ -53,7 +54,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <leisure.version>0.0.6-RELEASE</leisure.version>
+        <leisure.version>0.0.7-RELEASE</leisure.version>
 
         <!-- spring -->
         <spring-platform.version>Cairo-SR6</spring-platform.version>
@@ -153,6 +154,12 @@
             <dependency>
                 <groupId>com.github.life-lab</groupId>
                 <artifactId>common-feign</artifactId>
+                <version>${leisure.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.life-lab</groupId>
+                <artifactId>common-metrics</artifactId>
                 <version>${leisure.version}</version>
             </dependency>
 
