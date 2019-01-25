@@ -3,8 +3,7 @@ package com.github.life.lab.leisure.common.jpa.customiz.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.life.lab.leisure.common.model.BaseModel;
 import com.github.life.lab.leisure.common.model.validator.ValidatorGroup;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -19,6 +18,7 @@ import java.util.Date;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2018/9/15
  */
+@Data
 @MappedSuperclass
 @JsonIgnoreProperties({"hibernate_lazy_initializer", "handler", "delete_flag"})
 public abstract class BaseJpaModel implements BaseModel {
@@ -80,58 +80,4 @@ public abstract class BaseJpaModel implements BaseModel {
     @Column(name = "delete_flag")
     protected Boolean deleteFlag;
 
-    @Override
-    public Long getCreator() {
-        return creator;
-    }
-
-    @Override
-    public BaseJpaModel setCreator(Long creator) {
-        this.creator = creator;
-        return this;
-    }
-
-    @Override
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    @Override
-    public BaseJpaModel setCreateTime(Date createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    @Override
-    public Long getModifier() {
-        return modifier;
-    }
-
-    @Override
-    public BaseJpaModel setModifier(Long modifier) {
-        this.modifier = modifier;
-        return this;
-    }
-
-    @Override
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    @Override
-    public BaseJpaModel setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-        return this;
-    }
-
-    @Override
-    public Boolean getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    @Override
-    public BaseJpaModel setDeleteFlag(Boolean deleteFlag) {
-        this.deleteFlag = deleteFlag;
-        return this;
-    }
 }

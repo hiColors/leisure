@@ -46,8 +46,10 @@ public class ColorsClassLoader extends ClassLoader {
     public Class loadClass(String classpath, String classname) throws ClassNotFoundException {
         try {
             lock.lock();
-            if (loadclass.contains(classname)) {// 如果对象已经被加载
-                classLoader = new DynamicClassLoader(classLoader);// 创建新的加载器
+            // 如果对象已经被加载
+            if (loadclass.contains(classname)) {
+                // 创建新的加载器
+                classLoader = new DynamicClassLoader(classLoader);
                 loadclass.clear();
             }
             loadclass.add(classname);
@@ -69,8 +71,10 @@ public class ColorsClassLoader extends ClassLoader {
     public Class loadClass(byte[] classdata, String classname) throws ClassNotFoundException {
         try {
             lock.lock();
-            if (loadclass.contains(classname)) {// 如果对象已经被加载
-                classLoader = new DynamicClassLoader(classLoader);// 创建新的加载器
+            // 如果对象已经被加载
+            if (loadclass.contains(classname)) {
+                // 创建新的加载器
+                classLoader = new DynamicClassLoader(classLoader);
                 loadclass.clear();
             }
             loadclass.add(classname);

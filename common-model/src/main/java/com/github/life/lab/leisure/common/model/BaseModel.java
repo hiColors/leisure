@@ -24,7 +24,7 @@ public interface BaseModel extends JsonResultFilterSupport {
      * @param creator
      * @return
      */
-    BaseModel setCreator(Long creator);
+    void setCreator(Long creator);
 
     /**
      * 创建时间
@@ -39,7 +39,7 @@ public interface BaseModel extends JsonResultFilterSupport {
      * @param createTime
      * @return
      */
-    BaseModel setCreateTime(Date createTime);
+    void setCreateTime(Date createTime);
 
     /**
      * 修改人
@@ -54,7 +54,7 @@ public interface BaseModel extends JsonResultFilterSupport {
      * @param modifier
      * @return
      */
-    BaseModel setModifier(Long modifier);
+    void setModifier(Long modifier);
 
     /**
      * 修改时间
@@ -69,7 +69,7 @@ public interface BaseModel extends JsonResultFilterSupport {
      * @param modifyTime
      * @return
      */
-    BaseModel setModifyTime(Date modifyTime);
+    void setModifyTime(Date modifyTime);
 
     /**
      * 删除标志位
@@ -84,5 +84,5 @@ public interface BaseModel extends JsonResultFilterSupport {
      * @param deleteFlag
      * @return
      */
-    BaseModel setDeleteFlag(Boolean deleteFlag);
+    void setDeleteFlag(Boolean deleteFlag);
 }

@@ -6,7 +6,7 @@
 
     <groupId>com.github.life-lab</groupId>
     <artifactId>leisure</artifactId>
-    <version>0.0.7-RELEASE</version>
+    <version>0.0.8-RELEASE</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -54,7 +54,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <leisure.version>0.0.7-RELEASE</leisure.version>
+        <leisure.version>0.0.8-RELEASE</leisure.version>
 
         <!-- spring -->
         <spring-platform.version>Cairo-SR6</spring-platform.version>
@@ -379,16 +379,6 @@
             </plugin>
 
             <!-- JNA -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <environmentVariables>
-                        <LD_LIBRARY_PATH>/usr/local/lib</LD_LIBRARY_PATH>
-                    </environmentVariables>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
