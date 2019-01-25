@@ -20,7 +20,6 @@ import java.util.Date;
  * @date 2018/9/15
  */
 @MappedSuperclass
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties({"hibernate_lazy_initializer", "handler", "delete_flag"})
 public abstract class BaseJpaModel implements BaseModel {
 
