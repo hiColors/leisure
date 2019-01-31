@@ -15,14 +15,14 @@ import java.util.Map;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2018/9/30
  */
-@Component
+@Deprecated
 public class GetMappingPojoParamRequestInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
         if (template.method().equals(HttpMethod.GET.name()) && template.body() != null) {
             String json = new String(template.body());
-            template.body(null);
+            template.body("");
             Map<String, Collection<String>> queries = JsonUtils.buildMap(json);
             template.queries(queries);
         }

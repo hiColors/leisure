@@ -102,19 +102,6 @@ public class SnowflakeIDGenerator {
         log.info("SNOWFLAKE: initialised with dataCenterId:{}, sequence:{}", this.dataCenterId, this.sequence);
     }
 
-    public static void main(String[] args) throws ParseException {
-        long dataCenter = 1;
-        SnowflakeIDGenerator snowflakeIDGenerator = new SnowflakeIDGenerator(dataCenter);
-        Set<Long> ids = new HashSet<>();
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < 1000000; i++) {
-            ids.add(snowflakeIDGenerator.getId());
-        }
-        System.out.println(ids.parallelStream().count());
-        System.out.println(ids.parallelStream().filter(e -> e % 2 == 0).count());
-        System.out.println(System.currentTimeMillis() - start);
-    }
-
     /**
      * 阻塞到下一个毫秒，直到获得新的时间戳
      *

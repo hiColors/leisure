@@ -18,6 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author weichao.li (liweichao0102@gmail.com)
  * @date 2019/09/11
  */
+@SuppressWarnings("unchecked")
 public class ColorsExpression {
 
     /**

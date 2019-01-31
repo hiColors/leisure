@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 public class ColorsErrorDecoder implements ErrorDecoder {
 
-    private static final long CODE = 7L;
+    private static final Long CODE = 7L;
 
     @Override
     public Exception decode(String s, Response response) {

@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.life.lab.leisure.common.rocketmq.configuration.CommonRocketMqAutoConfiguration

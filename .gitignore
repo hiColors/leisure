@@ -9,3 +9,6 @@ out
 gen
 **/target
 .idea/**
+
+
+**/pom.xml.versionsBackup
