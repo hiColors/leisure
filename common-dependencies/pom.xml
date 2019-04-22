@@ -15,7 +15,6 @@
     <artifactId>common-dependencies</artifactId>
     <version>0.0.12-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>leisure Dependencies</name>
     <description>leisure Dependencies</description>
 
 
