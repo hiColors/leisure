@@ -6,7 +6,7 @@
 
     <groupId>com.github.life-lab</groupId>
     <artifactId>leisure</artifactId>
-    <version>0.0.11-RELEASE</version>
+    <version>0.0.12-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -17,6 +17,8 @@
         <module>common-jpa</module>
         <module>common-feign</module>
         <module>common-metrics</module>
+        <module>common-dependencies</module>
+        <module>example</module>
 
     </modules>
 
@@ -48,279 +50,33 @@
         <tag>1.0</tag>
     </scm>
 
-    <properties>
-
-        <leisure-children.version>0.0.11-RELEASE</leisure-children.version>
-
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-
-        <!-- spring -->
-        <spring-platform.version>Cairo-SR7</spring-platform.version>
-        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
-        <spring-boot.version>2.1.3.RELEASE</spring-boot.version>
-        <spring-cloud-alibaba.version>0.2.1.RELEASE</spring-cloud-alibaba.version>
-
-        <!-- 第三方 spring boot starter -->
-        <spring-boot-druid.version>1.1.13</spring-boot-druid.version>
-        <spring-boot-mybatis.version>2.0.0</spring-boot-mybatis.version>
-        <spring-boot-pagehelper.version>1.2.10</spring-boot-pagehelper.version>
-
-        <!-- swagger -->
-        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
-        <springfox-swagger2-annotation.version>1.5.21</springfox-swagger2-annotation.version>
-
-        <!-- mysql connector -->
-        <mysql-connector.version>5.1.47</mysql-connector.version>
-
-        <h2database.version>1.4.197</h2database.version>
-
-        <!-- jpa hibernate -->
-        <hibernate-validator.version>5.4.2.Final</hibernate-validator.version>
-        <hibernate-core.version>5.3.7.Final</hibernate-core.version>
-        <hibernate-jpa-2.1-api.version>1.0.2.Final</hibernate-jpa-2.1-api.version>
-
-        <!-- redisson -->
-        <resisson.version>3.10.1</resisson.version>
-
-        <!-- others -->
-        <lombok.version>1.18.4</lombok.version>
-        <jackson-databind.version>2.9.8</jackson-databind.version>
-        <slf4j-api.version>1.7.25</slf4j-api.version>
-        <httpclient.version>4.5.7</httpclient.version>
-        <cglib.version>3.2.8</cglib.version>
-        <javassist.version>3.22.0-GA</javassist.version>
-
-    </properties>
-
     <dependencyManagement>
 
         <dependencies>
 
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
+                <groupId>com.github.life-lab</groupId>
+                <artifactId>common-dependencies</artifactId>
+                <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>io.spring.platform</groupId>
-                <artifactId>platform-bom</artifactId>
-                <version>${spring-platform.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.life-lab</groupId>
-                <artifactId>common-model</artifactId>
-                <version>${leisure-children.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.life-lab</groupId>
-                <artifactId>common-exception</artifactId>
-                <version>${leisure-children.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.life-lab</groupId>
-                <artifactId>common-utils</artifactId>
-                <version>${leisure-children.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.life-lab</groupId>
-                <artifactId>common-framework</artifactId>
-                <version>${leisure-children.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.life-lab</groupId>
-                <artifactId>common-jpa</artifactId>
-                <version>${leisure-children.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.life-lab</groupId>
-                <artifactId>common-feign</artifactId>
-                <version>${leisure-children.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.life-lab</groupId>
-                <artifactId>common-metrics</artifactId>
-                <version>${leisure-children.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson-databind.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j-api.version}</version>
-            </dependency>
-
-            <!-- swagger -->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${springfox-swagger2.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${springfox-swagger2.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${springfox-swagger2-annotation.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-core</artifactId>
-                <version>${springfox-swagger2.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>${httpclient.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${spring-boot-druid.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${spring-boot-mybatis.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${spring-boot-pagehelper.version}</version>
-            </dependency>
-
-
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql-connector.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2database.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.javassist</groupId>
-                <artifactId>javassist</artifactId>
-                <version>${javassist.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cglib</groupId>
-                <artifactId>cglib</artifactId>
-                <version>${cglib.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.hibernate.javax.persistence</groupId>
-                <artifactId>hibernate-jpa-2.1-api</artifactId>
-                <version>${hibernate-jpa-2.1-api.version}</version>
-            </dependency>
-
-            <!-- hibernate validator jsr303 -->
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate-validator.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-core</artifactId>
-                <version>${hibernate-core.version}</version>
-            </dependency>
-
-            <!-- redisson -->
-            <dependency>
-                <groupId>org.redisson</groupId>
-                <artifactId>redisson-hibernate-53</artifactId>
-                <version>${resisson.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.redisson</groupId>
-                <artifactId>redisson-spring-boot-starter</artifactId>
-                <version>${resisson.version}</version>
             </dependency>
 
         </dependencies>
 
     </dependencyManagement>
 
+    <dependencies>
+        <!--依赖公共包-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
     <build>
-
-        <pluginManagement>
-
-            <plugins>
-
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>repackage</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-            </plugins>
-        </pluginManagement>
 
         <plugins>
 

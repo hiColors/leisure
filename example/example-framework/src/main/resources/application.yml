@@ -1,0 +1,6 @@
+spring:
+  aop:
+    proxy-target-class: true
+
+  application:
+    name: example-framework

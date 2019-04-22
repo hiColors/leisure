@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.life.lab.leisure.common.metrics.configuration.CommonMetricsAutoConfigration
+com.github.lifelab.leisure.common.metrics.configuration.CommonMetricsAutoConfigration

@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.life.lab.leisure.common.feign.configuration.CommonFeignAutoConfiguration
+com.github.lifelab.leisure.common.feign.configuration.CommonFeignAutoConfiguration
