@@ -2,14 +2,9 @@ package com.github.lifelab.leisure.common.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,22 +49,9 @@ public class DingTalkUtils {
         send(webhook, MsgType.MARKDOWN, text);
     }
 
-    public static synchronized void send(String webhook, MsgType msgType, String text) {
-        String body = getDingTalkPostBody(msgType, text);
-        HttpPost httppost = new HttpPost(webhook);
-        try {
-            httppost.addHeader("Content-Type", "application/json; charset=utf-8");
-            StringEntity se = new StringEntity(body, "utf-8");
-            httppost.setEntity(se);
-            HttpResponse response = HTTP_CLIENT.execute(httppost);
-            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                log.info("ding talk warning send success -> " + body);
-            }
-        } catch (IOException e) {
-            log.warn("ding talk warning send fail -> " + body);
-        } finally {
-            httppost.reset();
-        }
+    public static void send(String webhook, MsgType msgType, String text) {
+        String result = AsyncHttpUtil.doPost(webhook, getDingTalkPostBody(msgType, text));
+        log.info("DingTalkUtils#send result : {}", result);
     }
 
     private static String buildStandardTemplate(Warning warning) {
