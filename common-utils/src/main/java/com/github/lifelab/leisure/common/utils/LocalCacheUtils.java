@@ -65,4 +65,14 @@ public class LocalCacheUtils {
             CACHE_LOCK.readLock().unlock();
         }
     }
+
+    public static void remove(String key) {
+        CACHE_LOCK.writeLock().lock();
+        try {
+            LOCAL_CACHE.remove(key);
+        } finally {
+            CACHE_LOCK.writeLock().unlock();
+        }
+    }
+
 }
