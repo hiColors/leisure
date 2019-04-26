@@ -2,12 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>spring-cloud-dependencies-parent</artifactId>
-        <groupId>org.springframework.cloud</groupId>
-        <version>2.1.4.RELEASE</version>
-        <relativePath/>
-    </parent>
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -16,7 +10,32 @@
     <version>0.0.12.RELEASE</version>
     <packaging>pom</packaging>
     <description>leisure Dependencies</description>
+    <name>leisure dependencies</name>
+    <url>https://github.com/life-lab/leisure</url>
 
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>life-lab</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Li Weichao</name>
+            <email>liweichao0102@gmail.com</email>
+            <organization>com.github.life-lab</organization>
+            <url>https://github.com/life-lab/leisure</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:life-lab/leisure.git</connection>
+        <developerConnection>scm:git:git@github.com:life-lab/leisure.git</developerConnection>
+        <url>https://github.com/life-lab/leisure</url>
+        <tag>1.0</tag>
+    </scm>
 
     <properties>
 
@@ -295,5 +314,93 @@
         </dependencies>
 
     </dependencyManagement>
+
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                            <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <configuration>
+                            <executable>gpg</executable>
+                            <keyname>${gpg.keyname}</keyname>
+                            <passphrase>${gpg.passphrase}</passphrase>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+    <distributionManagement>
+
+        <snapshotRepository>
+            <id>maven-snapshots</id>
+            <name>OSS Snapshots Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+
+        <repository>
+            <id>maven-releases</id>
+            <name>OSS Staging Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+
+    </distributionManagement>
 
 </project>
