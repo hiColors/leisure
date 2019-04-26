@@ -11,6 +11,31 @@
     <packaging>pom</packaging>
     <description>leisure Dependencies</description>
 
+    <url>https://github.com/life-lab/leisure</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>life-lab</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Li Weichao</name>
+            <email>liweichao0102@gmail.com</email>
+            <organization>com.github.life-lab</organization>
+            <url>https://github.com/life-lab/leisure</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:life-lab/leisure.git</connection>
+        <developerConnection>scm:git:git@github.com:life-lab/leisure.git</developerConnection>
+        <url>https://github.com/life-lab/leisure</url>
+        <tag>1.0</tag>
+    </scm>
 
     <properties>
 
