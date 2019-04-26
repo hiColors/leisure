@@ -13,7 +13,7 @@
 
     <groupId>com.github.life-lab</groupId>
     <artifactId>common-dependencies</artifactId>
-    <version>0.0.12-SNAPSHOT</version>
+    <version>0.0.12.RELEASE</version>
     <packaging>pom</packaging>
     <description>leisure Dependencies</description>
 
