@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "swagger")
 public class SwaggerProperties {
 
-    private Boolean status = true;
+    private Boolean status = false;
 
     private String title = "{0} 服务端接口文档 ";
 

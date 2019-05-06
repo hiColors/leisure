@@ -1,19 +1,8 @@
-# leisure 项目介绍
-
-### 异常码说明
-
-> 异常码说明是由 8位 数字组成，前三位系统标识（从100开始），中间两位是模块标识（业务划分），后三位是异常标识（特定异常）
+# Leisure
 
 
-| 系统 | 3位系统标识 | 2位模块标识 | 3位异常标识 |
-| :--------: | :--------:| :-------- | :--------  |
-| leisure | 100 |  00：公共   | 
-| leisure | 100 |  01：common-exception   | 
-| leisure | 100 |  02：common-model   | 
-| leisure | 100 |  03：common-utils   | 
-| leisure | 100 |  04：common-metrics   | 
-| leisure | 100 |  05：common-framework   | 
-| leisure | 100 |  06：common-jpa   | 
-| leisure | 100 |  07：common-feign  | 
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.life-lab/leisure.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:com.github.life-lab%20AND%20a:leisure)
+[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 
+See the [中文文档](https://github.com/life-lab/leisure/blob/master/docs/readme-zh.md) for Chinese readme.
