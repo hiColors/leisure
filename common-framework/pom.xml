@@ -5,7 +5,7 @@
     <parent>
         <artifactId>leisure</artifactId>
         <groupId>com.github.life-lab</groupId>
-        <version>0.0.12.RELEASE</version>
+        <version>0.0.13.SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
