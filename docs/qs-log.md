@@ -45,3 +45,7 @@
     </logger>
         
 ```
+
+#### 3. 无 logback 文件，参照默认实现的。
+
+[ 默认 ](https://github.com/life-lab/leisure/blob/master/common-framework/src/main/resources/logback.xml)
