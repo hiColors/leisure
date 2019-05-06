@@ -1,11 +1,10 @@
 package com.github.lifelab.leisure.common.framework.springmvc.advice.enhance.handler;
 
 import com.github.lifelab.leisure.common.framework.springmvc.advice.enhance.event.ErrorSource;
-import com.github.lifelab.leisure.common.utils.DingTalkUtils;
+import com.github.lifelab.leisure.common.framework.warning.WarningService;
 import com.github.lifelab.leisure.common.utils.Warning;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -19,11 +18,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class DingtalkHandler implements ErrorSourceHandler {
 
-    /**
-     * 服务中 配置的钉钉告警地址
-     */
-    @Value("${warning.dingtalk:}")
-    private String dingTalkWebhook;
+
+    @Autowired
+    private WarningService warningService;
 
     @Override
     public boolean support(ErrorSource t) {
@@ -34,9 +31,7 @@ public class DingtalkHandler implements ErrorSourceHandler {
     @Override
     @Async
     public void dispose(ErrorSource t) {
-        if (StringUtils.isNotBlank(dingTalkWebhook)) {
-            Warning warning = (Warning) t.getData();
-            DingTalkUtils.send(dingTalkWebhook, warning);
-        }
+        Warning warning = (Warning) t.getData();
+        warningService.warning(warning);
     }
 }

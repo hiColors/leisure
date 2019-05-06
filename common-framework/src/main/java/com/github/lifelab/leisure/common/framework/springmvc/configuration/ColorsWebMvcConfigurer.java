@@ -29,7 +29,6 @@ import java.util.List;
  * @date 2018/9/11
  */
 @EnableWebMvc
-@EnableAsync
 @EnableAspectJAutoProxy
 @Configuration
 @Order(value = ColorsWebMvcConfigurer.ORDER)

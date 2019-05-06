@@ -5,14 +5,13 @@ import com.github.lifelab.leisure.common.exception.ExtensionException;
 import com.github.lifelab.leisure.common.framework.exception.EnumExceptionMessageFramework;
 import com.github.lifelab.leisure.common.framework.logger.LoggerConst;
 import com.github.lifelab.leisure.common.framework.springmvc.advice.enhance.event.ErrorEvent;
-import com.github.lifelab.leisure.common.framework.utils.EnvHelper;
+import com.github.lifelab.leisure.common.framework.warning.WarningService;
 import com.github.lifelab.leisure.common.model.response.ErrorResponse;
 import com.github.lifelab.leisure.common.utils.JsonUtils;
 import com.github.lifelab.leisure.common.utils.Warning;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.http.HttpStatus;
@@ -50,15 +49,6 @@ public abstract class AbstractExceptionHandlerAdvice implements ApplicationEvent
 
     @Autowired
     private Tracer tracer;
-
-    @Autowired
-    private EnvHelper envHelper;
-
-    @Value("${aliyun.sls.projectName:}")
-    private String projectName;
-
-    @Value("${aliyun.sls.logStoreName:}")
-    private String logStoreName;
 
     @Override
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
@@ -127,7 +117,7 @@ public abstract class AbstractExceptionHandlerAdvice implements ApplicationEvent
             } else if (exception instanceof HttpMediaTypeNotSupportedException) {
                 errorResponse.setStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
             }
-            data = new Warning(envHelper.getEnv(),
+            data = new Warning(null,
                     "服务发生非预期异常",
                     tracer.currentSpan().context().traceIdString(),
                     uri,
@@ -135,7 +125,7 @@ public abstract class AbstractExceptionHandlerAdvice implements ApplicationEvent
                     JsonUtils.serialize(paramMap),
                     null,
                     new Date(),
-                    exceptionMsg(exception));
+                    exception.getMessage());
         }
         response.setStatus(errorResponse.getStatus());
         publisher.publishEvent(new ErrorEvent(errorResponse, data));
@@ -162,23 +152,4 @@ public abstract class AbstractExceptionHandlerAdvice implements ApplicationEvent
         return params;
     }
 
-    protected String exceptionMsg(Exception exception) {
-        if (StringUtils.isBlank(projectName) || StringUtils.isBlank(logStoreName)) {
-            return exception.getMessage();
-        }
-        String traceId = tracer.currentSpan().context().traceIdString();
-        StringBuilder url = new StringBuilder();
-        url.append("https://sls.console.aliyun.com/next/project/")
-                .append(projectName)
-                .append("/logsearch/")
-                .append(logStoreName)
-                .append("?queryString=%s")
-                .append("&queryTimeType=99")
-                .append("&startTime=%d")
-                .append("&endTime=%d");
-        long startTime = new Date().toInstant().minusSeconds(10 * 60).getEpochSecond();
-        long endTime = new Date().toInstant().plusSeconds(5 * 60).getEpochSecond();
-        String logUrl = String.format(url.toString(), traceId, startTime, endTime);
-        return exception.getMessage() + "\r\n" + "[ 更多详情请点击查看阿里云日志 ](" + logUrl + ")";
-    }
 }
