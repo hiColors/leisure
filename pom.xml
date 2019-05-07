@@ -18,6 +18,8 @@
         <module>common-feign</module>
         <module>common-metrics</module>
         <module>common-dependencies</module>
+
+        <!-- 示例 demo -->
         <module>example</module>
 
     </modules>

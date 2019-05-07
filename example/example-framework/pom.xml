@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>example-parent</artifactId>
+        <artifactId>example</artifactId>
         <groupId>com.github.life-lab.leisure.example</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1.BUILD-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -15,23 +15,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-dependencies</artifactId>
-            <version>1.5.19.RELEASE</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-
-
-        <dependency>
             <groupId>com.github.life-lab</groupId>
             <artifactId>common-framework</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
