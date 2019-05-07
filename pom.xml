@@ -6,7 +6,7 @@
 
     <groupId>com.github.life-lab</groupId>
     <artifactId>leisure</artifactId>
-    <version>0.0.13.SNAPSHOT</version>
+    <version>0.0.13.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>

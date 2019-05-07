@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.lifelab.leisure.example</groupId>
+    <groupId>com.github.life-lab.leisure.example</groupId>
     <artifactId>example-parent</artifactId>
 
     <packaging>pom</packaging>
@@ -16,7 +16,7 @@
 
     <properties>
 
-        <leisure.version>0.0.12.RELEASE</leisure.version>
+        <leisure.version>0.0.13.BUILD-SNAPSHOT</leisure.version>
 
     </properties>
 

@@ -4,9 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>example-parent</artifactId>
-        <groupId>com.github.lifelab.leisure.example</groupId>
+        <groupId>com.github.life-lab.leisure.example</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>example-framework</artifactId>
