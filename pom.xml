@@ -6,7 +6,7 @@
 
     <groupId>com.github.life-lab</groupId>
     <artifactId>leisure</artifactId>
-    <version>0.0.12.RELEASE</version>
+    <version>0.0.13.BUILD-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -18,6 +18,8 @@
         <module>common-feign</module>
         <module>common-metrics</module>
         <module>common-dependencies</module>
+
+        <!-- 示例 demo -->
         <module>example</module>
 
     </modules>

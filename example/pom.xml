@@ -5,18 +5,19 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.lifelab.leisure.example</groupId>
-    <artifactId>example-parent</artifactId>
+    <groupId>com.github.life-lab.leisure.example</groupId>
+    <artifactId>example</artifactId>
 
     <packaging>pom</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1.BUILD-SNAPSHOT</version>
+
     <modules>
         <module>example-framework</module>
     </modules>
 
     <properties>
 
-        <leisure.version>0.0.12.RELEASE</leisure.version>
+        <leisure.version>0.0.13.BUILD-SNAPSHOT</leisure.version>
 
     </properties>
 
@@ -36,6 +37,15 @@
         </dependencies>
 
     </dependencyManagement>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <plugins>
